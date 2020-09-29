@@ -17,17 +17,18 @@ if(isset($_POST["submit"])){
         $isInvalid = "is-invalid";
     }else{
 
-    $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$nrp' AND password = '$pass'");
-    $data = mysqli_fetch_array($query);
-    $row = mysqli_num_rows($query);
-    if($row > 0){
+    $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$nrp'");
+    if(mysqli_num_rows($query)==1){
+        $row = mysqli_fetch_assoc($query);
+        if(password_verify($pass,$row["password"])){
         $_SESSION["nrp"] = $nrp;
         $_SESSION["status_user"] = $data["status_user"];
         echo "Berhasil Login";
         header("location:../page/dashboard.php");
-    }else{
-       $alert = "<script>swal('Gagal', 'NRP atau password Anda salah', 'error');</script>";
+        }
     }
+       $alert = "<script>swal('Gagal', 'NRP atau password Anda salah', 'error');</script>";
+    
 }
 }
 
@@ -68,7 +69,7 @@ if(isset($_POST["submit"])){
                     <form method="post" action="">
                         <div class="form-group">
                             <label>NRP</label>
-                            <input type="text" name="nrp" class="form-control <?=$isInvalid;?>" id="nrp">
+                            <input type="text" name="nrp" class="form-control <?=$isInvalid;?>" id="nrp" autocomplete="off">
                             
                             <div class="invalid-feedback" id="invalid-feedback">
                                 Mohon isi NRP

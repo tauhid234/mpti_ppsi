@@ -16,19 +16,22 @@ if(isset($_POST["submit"])){
     $hp = $_POST["handphone"];
     $addres = $_POST["address"];
     $unit = $_POST["unit"];
+    $pangkat = $_POST["pangkat"];
+    $pass = $_POST["password"];
+    $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
 
 
 
-    if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit==""){
-        $alert = "<script>toastr.error('Gagal','Field Masih ada yang belum di isi')</script>";
+    if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit=="" || $pangkat=="" || $pass==""){
+        $alert = "<script>swal('Gagal', 'NRP atau password Anda salah', 'error');</script>";
     }else{
         $timeday = gettimeofday();
         $getnrp = $timeday;
         $foto = $_FILES['file']['name'];
         $file_tmp = $_FILES['file']['tmp_name'];
         move_uploaded_file($file_tmp,'../../image/'.$foto);
-        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
-                             VALUES ('$getnrp[sec]','123','$nama','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','intel')");
+        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
+                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','intel')");
         $alert = "<script>toastr.success('Sukses','Data tersimpan')</script>";
     }
 
@@ -60,11 +63,10 @@ if(isset($_POST["submit"])){
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initAutocomplete&libraries=places&v=weekly"
-      defer
-    ></script>
     
+    <!--SWEET ALERT-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
@@ -123,15 +125,23 @@ if(isset($_POST["submit"])){
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="berat">Berat Badan</label>
                                 <input type="number" class="form-control" min="0" max="100" id="berat" name="berat">
                                 <div id="invalid-berat" style="color:red;"></div>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="tinggi">Tinggi Badan</label>
                                 <input type="number" class="form-control" id="tinggi" name="tinggi">
                                 <div id="invalid-tinggi" style="color:red;"></div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="tinggi">Pangkat</label>
+                                <select class="form-control" name="pangkat" id="pangkat">
+                                    <option value="">-</option>
+                                    <option value="BRIPDA">BRIPDA</option>
+                                    <option value="BRIPKA">BRIPKA</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
@@ -195,6 +205,12 @@ if(isset($_POST["submit"])){
                                 <option value="Polsek Kembangan">Polsek Kembangan</option>
                               </optgroup>
                             </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputEmail4">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
                             </div>
                         </div>
                         <div class="form-group">

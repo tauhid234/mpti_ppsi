@@ -71,6 +71,7 @@ if(!isset($_SESSION["nrp"])){
                             <h5 class="card-title"><?= strtoupper($value['nama']);?><br><br><i class="menu-icon fa fa-map-marker"></i> <?= $value['unit'];?></h5>
                                 <ul class="list-group list-group-flush">
                                 <li class="list-group-item">NRP : <?= $value['nrp'];?></li>
+                                <li class="list-group-item">Pangkat : <?= $value['pangkat'];?></li>
                                 <li class="list-group-item">Tanggal Lahir : <?= $value['tgl_lahir']; ?></li>
                                 <li class="list-group-item">Umur : <?= $value['umur'];?> Th</li>
                                 <li class="list-group-item">Berat Badan : <?= $value['berat_badan'];?> Kg</li>

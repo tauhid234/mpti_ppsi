@@ -40,10 +40,6 @@ if(!isset($_SESSION["nrp"])){
 
 </head>
 
-<style>
-#map { position: absolute; top: 0; bottom: 0; width: 100%; }
-</style>
-
 <body>
     <!-- Left Panel -->
     <?php 
@@ -103,17 +99,17 @@ if(!isset($_SESSION["nrp"])){
                 </div>
 
                     <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                            <div id="map" style="width: 100%; height: 450px;"></div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="map" style="width: 100%; height: 450px;"></div>
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </div>
 
 
-                <!--div class="row">
+                <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
@@ -121,9 +117,8 @@ if(!isset($_SESSION["nrp"])){
                             </div>
                         </div>
                     </div>
-                </div-->
+                </div>
 
-              <!--div class="row">
                 <div class="orders">
                     <div class="row">
                         <div class="col-xl-12">
@@ -165,7 +160,7 @@ if(!isset($_SESSION["nrp"])){
                                 </div>
                             </div> <!-- /.card -->
                         </div>  <!-- /.col-lg-8 -->
-                        </div-->
+                        </div>
                
                 <div class="clearfix"></div>
                 
@@ -189,49 +184,96 @@ if(!isset($_SESSION["nrp"])){
 
     <!--Local Stuff-->
     <script type="text/javascript">
-    //   google.charts.load('current', {'packages':['bar']});
-    //   google.charts.setOnLoadCallback(drawChart);
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
 
-    //   function drawChart() {
-    //     var data = google.visualization.arrayToDataTable([
-    //       ['Bulan', 'Narkotika'],
-    //       ['Januari', 0],
-    //       ['Febuari', 0],
-    //       ['Maret', 0],
-    //       ['April', 0],
-    //       ['Mei', 0],
-    //       ['Juni', 0],
-    //       ['Juli', 0],
-    //       ['Agustus', 0],
-    //       ['September', 0],
-    //       ['Oktober', 0],
-    //       ['November', 0],
-    //       ['Desember', 0],
-    //     ]);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Bulan', 'Narkotika'],
+          ['Januari', 0],
+          ['Febuari', 0],
+          ['Maret', 0],
+          ['April', 0],
+          ['Mei', 0],
+          ['Juni', 0],
+          ['Juli', 0],
+          ['Agustus', 0],
+          ['September', 0],
+          ['Oktober', 0],
+          ['November', 0],
+          ['Desember', 0],
+        ]);
 
-    //     var options = {
-    //       chart: {
-    //         title: 'Statistik Kasus Narkoba Per Bulan',
-    //         subtitle: 'Tahun 2020',
-    //       }
-    //     };
+        var options = {
+          chart: {
+            title: 'Statistik Kasus Narkoba Per Bulan',
+            subtitle: 'Tahun 2020',
+          }
+        };
 
-    //     var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
 
-    //     chart.draw(data, google.charts.Bar.convertOptions(options));
-    //   }
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+
+// mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
+// var map = new mapboxgl.Map({
+// container: 'map',
+// style: 'mapbox://styles/mapbox/streets-v11',
+// center: [12.550343, 55.665957],
+// zoom: 8
+// });
+ 
+// var marker = new mapboxgl.Marker()
+// .setLngLat([12.550343, 55.665957])
+// .addTo(map);
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
-var map = new mapboxgl.Map({
-container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
-center: [12.550343, 55.665957],
-zoom: 8
-});
- 
-var marker = new mapboxgl.Marker()
-.setLngLat([12.550343, 55.665957])
-.addTo(map);
+    var geojson = {
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'properties': {
+                    'message': 'Foo',
+                    'iconSize': [60, 60]
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [-6.193404, 106.818787]
+                }
+            }
+        ]
+    };
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-6.193404, 106.818787],
+        zoom: 5
+    });
+
+    // add markers to map
+    geojson.features.forEach(function (marker) {
+        // create a DOM element for the marker
+        var el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage =
+            'url(https://placekitten.com/g/' +
+            marker.properties.iconSize.join('/') +
+            '/)';
+        el.style.width = marker.properties.iconSize[0] + 'px';
+        el.style.height = marker.properties.iconSize[1] + 'px';
+
+        el.addEventListener('click', function () {
+            window.alert(marker.properties.message);
+        });
+
+        // add marker to map
+        new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map);
+    });
 </script>
 
     

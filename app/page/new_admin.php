@@ -16,6 +16,9 @@ if(isset($_POST["submit"])){
     $hp = $_POST["handphone"];
     $addres = $_POST["address"];
     $unit = $_POST["unit"];
+    $pangkat = $_POST["pangkat"];
+    $pass = $_POST["password"];
+    $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
 
     $foto = $_FILES['file']['name'];
     $file_tmp = $_FILES['file']['tmp_name'];
@@ -27,8 +30,8 @@ if(isset($_POST["submit"])){
         $timeday = gettimeofday();
         $getnrp = $timeday;
         move_uploaded_file($file_tmp,'../../image/'.$foto);
-        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
-                             VALUES ('$getnrp[sec]','123','$nama','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','admin')");
+        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
+                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','admin')");
         $alert = "<script>swal('Success','Data berhasil di simpan','success');</script>";
     }
 
@@ -121,15 +124,23 @@ if(isset($_POST["submit"])){
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="berat">Berat Badan</label>
                                 <input type="number" class="form-control" min="0" max="100" id="berat" name="berat">
                                 <div id="invalid-berat" style="color:red;"></div>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="tinggi">Tinggi Badan</label>
                                 <input type="number" class="form-control" id="tinggi" name="tinggi">
                                 <div id="invalid-tinggi" style="color:red;"></div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="tinggi">Pangkat</label>
+                                <select class="form-control" name="pangkat" id="pangkat">
+                                    <option value="">-</option>
+                                    <option value="BRIPDA">BRIPDA</option>
+                                    <option value="BRIPKA">BRIPKA</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
@@ -193,6 +204,12 @@ if(isset($_POST["submit"])){
                                 <option value="Polsek Kembangan">Polsek Kembangan</option>
                               </optgroup>
                             </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputEmail4">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
                             </div>
                         </div>
                         <div class="form-group">

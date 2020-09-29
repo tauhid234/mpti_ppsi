@@ -9,6 +9,9 @@ $alert = "";
 if(isset($_GET['nrp'])){
     $nrp = base64_decode($_GET['nrp']);
     $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$nrp'");
+    if(mysqli_num_rows($query)==0){
+        header("Location:anggota.php");
+    }
     $data = mysqli_fetch_array($query);
 
 if(isset($_POST["submit"])){
@@ -21,6 +24,7 @@ if(isset($_POST["submit"])){
     $hp = $_POST["handphone"];
     $addres = $_POST["address"];
     $unit = $_POST["unit"];
+    $pangkat = $_POST["pangkat"];
 
     
     $foto = $_FILES['file']['name'];
@@ -35,7 +39,7 @@ if(isset($_POST["submit"])){
     }
     else{
         move_uploaded_file($file_tmp,'../../image/'.$foto);
-        $query = mysqli_query($conn,"UPDATE user SET nama='$nama', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
+        $query = mysqli_query($conn,"UPDATE user SET nama='$nama', pangkat='$pangkat', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
         tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres', unit='$unit' WHERE nrp = '$nrp'");
         $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
     }
@@ -126,20 +130,26 @@ if(isset($_POST["submit"])){
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="berat">Berat Badan</label>
                                 <input type="number" class="form-control" min="0" max="100" id="berat" name="berat" value="<?= $data['berat_badan'];?>">
                                 <div id="invalid-berat" style="color:red;"></div>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="tinggi">Tinggi Badan</label>
                                 <input type="number" class="form-control" id="tinggi" name="tinggi" value="<?= $data['tinggi_badan'];?>">
                                 <div id="invalid-tinggi" style="color:red;"></div>
                             </div>
+                            <div class="form-group col-md-4">
+                                <label for="tinggi">Pangkat</label>
+                                <select class="form-control" name="pangkat" id="pangkat">
+                                    <option value="">-</option>
+                                    <option value="BRIPDA">BRIPDA</option>
+                                    <option value="BRIPKA">BRIPKA</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-row">
-                            
-                            <?php if($_SESSION["status_user"]=="superadmin"){?>
                                 <div class="form-group col-md-4">
                                 <label for="inputEmail4">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" value="<?= $data['email'];?>">
@@ -148,15 +158,6 @@ if(isset($_POST["submit"])){
                                 <label for="inputEmail4">No.HP</label>
                                 <input type="number" class="form-control" id="handphone" name="handphone" value="<?= $data['no_hp'];?>">
                                 </div>
-                            <?php }else if($_SESSION["status_user"]=="admin"){?>
-                            <div class="form-group col-md-4">
-                            <label for="inputEmail4">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<?= $data['email'];?>">
-                            </div>
-                            <div class="form-group col-md-4">
-                            <label for="inputEmail4">No.HP</label>
-                            <input type="number" class="form-control" id="handphone" name="handphone" value="<?= $data['no_hp'];?>">
-                            </div>
                             <div class="form-group col-md-4">
                             <label for="inputEmail4">Unit Polsek</label>
                             <select name="unit" class="form-control">
@@ -210,7 +211,6 @@ if(isset($_POST["submit"])){
                               </optgroup>
                             </select>
                             </div>
-                            <?php } ?>
                         </div>
                         <div class="form-group">
                             <label for="inputAddress">Address</label>
