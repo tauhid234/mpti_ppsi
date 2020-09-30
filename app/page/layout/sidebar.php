@@ -42,8 +42,9 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </i>Penugasan</a>
                         <ul class="sub-menu children dropdown-menu">
-                        <li></i><a href="admin_anggota.php">Form Penugasan</a></li>
-                        <li></i><a href="admin_anggota.php">Form Penyelidikan</a></li>
+                        <li></i><a href="">Form Penugasan</a></li>
+                        <li></i><a href="">Form Penyelidikan</a></li>
+                        <li></i><a href="">Kerja Sama Instantsi</a></li>
                         </ul>
                     </li>
 
