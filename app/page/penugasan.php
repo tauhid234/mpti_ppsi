@@ -1,14 +1,22 @@
+<?php
+session_start();
+include("../../server/config.php");
+if(!isset($_SESSION["nrp"])){
+    header("Location:../authentication/index.php");
+}
+
+$unit = $_SESSION["unit"];
+?>
 <!doctype html>
  <html class="no-js" lang="">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SAT RESNARKOBA | PENUGASAN</title>
-    <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="https://cdn.iconscout.com/icon/free/png-256/artificial-intelligence-1758133-1497311.png">
-    <link rel="shortcut icon" href="https://cdn.iconscout.com/icon/free/png-256/artificial-intelligence-1758133-1497311.png">
+    <link rel="apple-touch-icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
+    <link rel="shortcut icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -24,11 +32,6 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initAutocomplete&libraries=places&v=weekly"
-      defer
-    ></script>
-    
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
@@ -54,9 +57,49 @@
             <div class="animated fadeIn">
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5>Penugasan Anggota</h5>
+                    <h5>Surat Tugas;</h5>
                 </div>
             </div>
+
+        <div class="row">
+          <div class="col-md-12" style="padding-top:10px;">
+            <form method="post" action="output_surat_tugas.php">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="no_laporan">Laporan Kasus Narkotika Nomor</label>
+                        <input type="text" class="form-control" name="laporan_kasus_narkotika_nomor" id="laporan_kasus_narkotika_nomor" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="label">DiTugaskan Kepada</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div class="form-check">
+                        <?php $query = mysqli_query($conn,"SELECT * FROM USER WHERE status_user = 'intel' AND unit = '$unit'");
+                              foreach ($query as $key => $value) { ?>
+                              <div class="row">
+                                <div class="col-md-12">
+                              <input class="form-check-input" type="checkbox" name="penugasan" id="gridCheck" value="<?= $value['nrp'];?>">
+                              <label class="form-check-label" for="gridCheck">
+                                <?= $value["nama"]; ?>
+                              </label>
+                                </div>
+                              </div>
+                        <?php } ?>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <button type="submit" name="export" class="btn btn-primary">Cetak Surat Tugas</button>
+                        </div>
+                    </div>
+            </form>
+            </div>
+        </div>
 
 
 

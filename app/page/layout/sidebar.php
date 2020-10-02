@@ -12,7 +12,6 @@
                             <li><i class="menu-icon fa fa-users"></i><a href="anggota.php">Anggota</a></li>
                             <li><i class="menu-icon fa fa-user"></i><a href="new_anggota.php">Anggota Baru</a></li>
                             <li><i class="menu-icon fa fa-briefcase"></i><a href="penugasan.php">Penugasan Anggota</a></li>
-                            <li><i class="menu-icon fa fa-shield"></i><a href="team.php">Team</a></li>
                         </ul>
                         <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-group"></i>ADMIN</a>
@@ -49,7 +48,7 @@
 
                     <li class="menu-title">Data Tersangka</li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" aria-haspopup="true"> </i>Tersangka</a>
+                        <a href="#" aria-haspopup="true"> </i>Tersangka</a>
                         <a href="#" class="dropdown-toggle" aria-haspopup="true"> </i>Data Pencarian Orang (DPO)</a>
                         <ul class="sub-menu children dropdown-menu">
                         </ul>

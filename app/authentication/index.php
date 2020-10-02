@@ -19,10 +19,11 @@ if(isset($_POST["submit"])){
 
     $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$nrp'");
     if(mysqli_num_rows($query)==1){
-        $row = mysqli_fetch_assoc($query);
+        $row = mysqli_fetch_array($query);
         if(password_verify($pass,$row["password"])){
         $_SESSION["nrp"] = $nrp;
-        $_SESSION["status_user"] = $data["status_user"];
+        $_SESSION["status_user"] = $row["status_user"];
+        $_SESSION["unit"] = $row["unit"];
         echo "Berhasil Login";
         header("location:../page/dashboard.php");
         }
