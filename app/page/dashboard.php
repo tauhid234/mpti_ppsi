@@ -216,17 +216,17 @@ if(!isset($_SESSION["nrp"])){
         chart.draw(data, google.charts.Bar.convertOptions(options));
       }
 
-// mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
-// var map = new mapboxgl.Map({
-// container: 'map',
-// style: 'mapbox://styles/mapbox/streets-v11',
-// center: [12.550343, 55.665957],
-// zoom: 8
-// });
+mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [12.550343, 55.665957],
+zoom: 8
+});
  
-// var marker = new mapboxgl.Marker()
-// .setLngLat([12.550343, 55.665957])
-// .addTo(map);
+var marker = new mapboxgl.Marker()
+.setLngLat([12.550343, 55.665957])
+.addTo(map);
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
     var geojson = {
