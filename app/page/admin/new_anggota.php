@@ -1,8 +1,8 @@
 <?php
 session_start();
-include("../../server/config.php");
+include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
-    header("Location:../authentication/index.php");
+    header("Location:../../authentication/index.php");
 }
 
 $alert = "";
@@ -20,19 +20,19 @@ if(isset($_POST["submit"])){
     $pass = $_POST["password"];
     $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
 
-    $foto = $_FILES['file']['name'];
-    $file_tmp = $_FILES['file']['tmp_name'];
 
 
-    if($nama==""||$foto==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit==""){
-        $alert = "<script>swal('Gagal','Field masih ada yang belum di isi','error');</script>";
+    if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit=="" || $pangkat=="" || $pass==""){
+        $alert = "<script>swal('Gagal', 'NRP atau password Anda salah', 'error');</script>";
     }else{
         $timeday = gettimeofday();
         $getnrp = $timeday;
-        move_uploaded_file($file_tmp,'../../image/'.$foto);
+        $foto = $_FILES['file']['name'];
+        $file_tmp = $_FILES['file']['tmp_name'];
+        move_uploaded_file($file_tmp,'../../../image/'.$foto);
         $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
-                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','admin')");
-        $alert = "<script>swal('Success','Data berhasil di simpan','success');</script>";
+                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','intel')");
+        $alert = "<script>toastr.success('Sukses','Data tersimpan')</script>";
     }
 
 
@@ -43,11 +43,11 @@ if(isset($_POST["submit"])){
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SAT RESNARKOBA | ADMIN BARU</title>
+    <title>SAT RESNARKOBA | ANGGOTA BARU</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="apple-touch-icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
-    <link rel="shortcut icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
+   
+    <link rel="apple-touch-icon" href="../../../asset/logo.png">
+    <link rel="shortcut icon" href="../../../asset/logo.png">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -55,16 +55,18 @@ if(isset($_POST["submit"])){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
-    <link rel="stylesheet" href="../../asset/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="../../asset/css/style.css">
+    <link rel="stylesheet" href="../../../asset/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../../../asset/css/style.css">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+    
     <!--SWEET ALERT-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
@@ -91,7 +93,7 @@ if(isset($_POST["submit"])){
             <div class="animated fadeIn">
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5>Admin Baru</h5>
+                    <h5>Anggota Baru</h5>
                 </div>
             </div>
                <div class="row">
@@ -273,7 +275,7 @@ if(isset($_POST["submit"])){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="../../asset/js/main.js"></script>
+    <script src="../../../asset/js/main.js"></script>
 
     <!--Local Stuff-->
   

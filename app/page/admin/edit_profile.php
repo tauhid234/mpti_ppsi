@@ -1,16 +1,13 @@
 <?php
 session_start();
-include("../../server/config.php");
+include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
-    header("Location:../authentication/index.php");
+    header("Location:../../authentication/index.php");
 }
 
 $alert = "";
 if(isset($_GET['nrp'])){
     $nrp = base64_decode($_GET['nrp']);
-    $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$nrp'");
-    $data = mysqli_fetch_array($query);
-    $sesi = $_SESSION["status_user"];
 
 if(isset($_POST["submit"])){
     $nama = strtolower($_POST["name"]);
@@ -50,8 +47,9 @@ if(isset($_POST["submit"])){
     <title>SAT RESNARKOBA | EDIT PROFILE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
-    <link rel="shortcut icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
+  
+    <link rel="apple-touch-icon" href="../../../asset/logo.png">
+    <link rel="shortcut icon" href="../../../asset/logo.png">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -59,8 +57,8 @@ if(isset($_POST["submit"])){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
-    <link rel="stylesheet" href="../../asset/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="../../asset/css/style.css">
+    <link rel="stylesheet" href="../../../asset/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../../../asset/css/style.css">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     
     <!--SWEET ALERT-->
@@ -88,11 +86,16 @@ if(isset($_POST["submit"])){
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
+        <?php 
+    $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$nrp'");
+    $data = mysqli_fetch_array($query);
+    $sesi = $_SESSION["status_user"];
+    ?>
             <!-- Animated -->
             <div class="animated fadeIn">
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5>Edit Profile</h5>
+                    <h5>Edit Profile <?= $data['nrp']; ?></h5>
                 </div>
             </div>
                <div class="row">
@@ -102,7 +105,7 @@ if(isset($_POST["submit"])){
                     <form method="post" action="" enctype="multipart/form-data">
                     
                     <div id="imagePreview" style="width:100px; height:100px;">
-                        <img src="../../image/<?=$data['foto'];?>">
+                        <img src="../../../image/<?=$data['foto'];?>">
                     </div>
 
                     <div class="form-row">
@@ -209,7 +212,7 @@ if(isset($_POST["submit"])){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="../../asset/js/main.js"></script>
+    <script src="../../../asset/js/main.js"></script>
 
     <!--Local Stuff-->
   

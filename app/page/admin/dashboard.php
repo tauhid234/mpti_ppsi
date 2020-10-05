@@ -2,7 +2,7 @@
 session_start();
 $infoSession = "<script>toastr.success('Success', 'tes')</script>";
 if(!isset($_SESSION["nrp"])){
-    header("location:../authentication/index.php");
+    header("location:../../authentication/index.php");
 }
 
 ?>
@@ -14,8 +14,9 @@ if(!isset($_SESSION["nrp"])){
     <title>SAT RESNARKOBA | DASHBOARD</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
-    <link rel="shortcut icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
+    
+    <link rel="apple-touch-icon" href="../../../asset/logo.png">
+    <link rel="shortcut icon" href="../../../asset/logo.png">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -23,13 +24,14 @@ if(!isset($_SESSION["nrp"])){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
-    <link rel="stylesheet" href="../../asset/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="../../asset/css/style.css">
+    <link rel="stylesheet" href="../../../asset/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../../../asset/css/style.css">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzwRmT2nf0K-oT7TZ5gQc4WoQ3xRkyrnc&callback=initMap"></script>
 
     <!--MAPBOX API-->
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
@@ -66,7 +68,7 @@ if(!isset($_SESSION["nrp"])){
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-1">
-                                        <!--i class="pe-7s-cash"></i-->
+                                        <i class="pe-7s-box"></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
@@ -180,7 +182,7 @@ if(!isset($_SESSION["nrp"])){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="../../asset/js/main.js"></script>
+    <script src="../../../asset/js/main.js"></script>
 
     <!--Local Stuff-->
     <script type="text/javascript">
@@ -216,64 +218,16 @@ if(!isset($_SESSION["nrp"])){
         chart.draw(data, google.charts.Bar.convertOptions(options));
       }
 
-mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
-var map = new mapboxgl.Map({
-container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
-center: [12.550343, 55.665957],
-zoom: 8
-});
- 
-var marker = new mapboxgl.Marker()
-.setLngLat([12.550343, 55.665957])
-.addTo(map);
 
-mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
-    var geojson = {
-        'type': 'FeatureCollection',
-        'features': [
-            {
-                'type': 'Feature',
-                'properties': {
-                    'message': 'Foo',
-                    'iconSize': [60, 60]
-                },
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': [-6.193404, 106.818787]
-                }
-            }
-        ]
-    };
-
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-6.193404, 106.818787],
-        zoom: 5
-    });
-
-    // add markers to map
-    geojson.features.forEach(function (marker) {
-        // create a DOM element for the marker
-        var el = document.createElement('div');
-        el.className = 'marker';
-        el.style.backgroundImage =
-            'url(https://placekitten.com/g/' +
-            marker.properties.iconSize.join('/') +
-            '/)';
-        el.style.width = marker.properties.iconSize[0] + 'px';
-        el.style.height = marker.properties.iconSize[1] + 'px';
-
-        el.addEventListener('click', function () {
-            window.alert(marker.properties.message);
-        });
-
-        // add marker to map
-        new mapboxgl.Marker(el)
-            .setLngLat(marker.geometry.coordinates)
-            .addTo(map);
-    });
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: -5.7759361, lng: 106.1174583};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 4, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
 </script>
 
     

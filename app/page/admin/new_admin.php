@@ -1,19 +1,11 @@
 <?php
 session_start();
-include("../../server/config.php");
+include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
-    header("Location:../authentication/index.php");
+    header("Location:../../authentication/index.php");
 }
 
 $alert = "";
-if(isset($_GET['nrp'])){
-    $nrp = base64_decode($_GET['nrp']);
-    $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$nrp'");
-    if(mysqli_num_rows($query)==0){
-        header("Location:anggota.php");
-    }
-    $data = mysqli_fetch_array($query);
-
 if(isset($_POST["submit"])){
     $nama = strtolower($_POST["name"]);
     $tgl_lahir = $_POST["tgl_lahir"];
@@ -25,25 +17,25 @@ if(isset($_POST["submit"])){
     $addres = $_POST["address"];
     $unit = $_POST["unit"];
     $pangkat = $_POST["pangkat"];
+    $pass = $_POST["password"];
+    $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
 
-    
     $foto = $_FILES['file']['name'];
     $file_tmp = $_FILES['file']['tmp_name'];
 
-    if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""){
-        $alert = "<script>swal('Gagal', 'Field masih ada yang belum di isi', 'error');</script>";
-    }elseif ($foto==""||$unit==""||$addres=="") {
-        $query = mysqli_query($conn,"UPDATE user SET nama='$nama', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
-                tinggi_badan='$tb', email='$email', no_hp='$hp' WHERE nrp = '$nrp'");
-        $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
+
+    if($nama==""||$foto==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit==""){
+        $alert = "<script>swal('Gagal','Field masih ada yang belum di isi','error');</script>";
+    }else{
+        $timeday = gettimeofday();
+        $getnrp = $timeday;
+        move_uploaded_file($file_tmp,'../../../image/'.$foto);
+        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
+                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','admin')");
+        $alert = "<script>swal('Success','Data berhasil di simpan','success');</script>";
     }
-    else{
-        move_uploaded_file($file_tmp,'../../image/'.$foto);
-        $query = mysqli_query($conn,"UPDATE user SET nama='$nama', pangkat='$pangkat', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
-        tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres', unit='$unit' WHERE nrp = '$nrp'");
-        $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
-    }
-}
+
+
 }
 ?>
 <!doctype html>
@@ -51,11 +43,12 @@ if(isset($_POST["submit"])){
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SAT RESNARKOBA | EDIT DATA</title>
+    <title>SAT RESNARKOBA | ADMIN BARU</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
-    <link rel="shortcut icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
+    
+    <link rel="apple-touch-icon" href="../../../asset/logo.png">
+    <link rel="shortcut icon" href="../../../asset/logo.png">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -63,10 +56,13 @@ if(isset($_POST["submit"])){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
-    <link rel="stylesheet" href="../../asset/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="../../asset/css/style.css">
+    <link rel="stylesheet" href="../../../asset/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../../../asset/css/style.css">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+
     <!--SWEET ALERT-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
@@ -96,7 +92,7 @@ if(isset($_POST["submit"])){
             <div class="animated fadeIn">
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5>Edit Data</h5>
+                    <h5>Admin Baru</h5>
                 </div>
             </div>
                <div class="row">
@@ -105,9 +101,7 @@ if(isset($_POST["submit"])){
                             <div class="card-body">
                     <form method="post" action="" enctype="multipart/form-data">
                     
-                    <div id="imagePreview" style="width:100px; height:100px;">
-                        <img src="../../image/<?=$data['foto'];?>">
-                    </div>
+                    <div id="imagePreview" style="width:100px; height:100px;"></div>
 
                     <div class="form-row">
                         <div class="form-group col-md-12">
@@ -118,26 +112,26 @@ if(isset($_POST["submit"])){
                         <div class="form-row">
                             <div class="form-group col-md-4">
                             <label for="nama">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="name" name="name" value="<?= $data['nama'];?>">
+                            <input type="text" class="form-control" id="name" name="name">
                             </div>
                             <div class="form-group col-md-4">
                             <label for="nama">Tanggal Lahir</label>
-                            <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" value="<?= $data['tgl_lahir'];?>">
+                            <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir">
                              </div>
                             <div class="form-group col-md-4">
                             <label for="nama">Umur</label>
-                            <input type="text" readonly class="form-control" id="umur" name="umur" value="<?= $data['umur'];?>" onclick="cekumur();">                            
+                            <input type="text" readonly class="form-control" id="umur" name="umur" onclick="cekumur();">                            
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="berat">Berat Badan</label>
-                                <input type="number" class="form-control" min="0" max="100" id="berat" name="berat" value="<?= $data['berat_badan'];?>">
+                                <input type="number" class="form-control" min="0" max="100" id="berat" name="berat">
                                 <div id="invalid-berat" style="color:red;"></div>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="tinggi">Tinggi Badan</label>
-                                <input type="number" class="form-control" id="tinggi" name="tinggi" value="<?= $data['tinggi_badan'];?>">
+                                <input type="number" class="form-control" id="tinggi" name="tinggi">
                                 <div id="invalid-tinggi" style="color:red;"></div>
                             </div>
                             <div class="form-group col-md-4">
@@ -150,14 +144,14 @@ if(isset($_POST["submit"])){
                             </div>
                         </div>
                         <div class="form-row">
-                                <div class="form-group col-md-4">
-                                <label for="inputEmail4">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="<?= $data['email'];?>">
-                                </div>
-                                <div class="form-group col-md-4">
-                                <label for="inputEmail4">No.HP</label>
-                                <input type="number" class="form-control" id="handphone" name="handphone" value="<?= $data['no_hp'];?>">
-                                </div>
+                            <div class="form-group col-md-4">
+                            <label for="inputEmail4">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                            </div>
+                            <div class="form-group col-md-4">
+                            <label for="inputEmail4">No.HP</label>
+                            <input type="number" class="form-control" id="handphone" name="handphone">
+                            </div>
                             <div class="form-group col-md-4">
                             <label for="inputEmail4">Unit Polsek</label>
                             <select name="unit" class="form-control">
@@ -212,9 +206,15 @@ if(isset($_POST["submit"])){
                             </select>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputEmail4">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="inputAddress">Address</label>
-                            <textarea class="form-control" id="address" name="address" value="<?= $data['address'];?>"></textarea>
+                            <textarea class="form-control" id="address" name="address"></textarea>
                         </div>
                         <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                         </form>
@@ -274,7 +274,7 @@ if(isset($_POST["submit"])){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="../../asset/js/main.js"></script>
+    <script src="../../../asset/js/main.js"></script>
 
     <!--Local Stuff-->
   

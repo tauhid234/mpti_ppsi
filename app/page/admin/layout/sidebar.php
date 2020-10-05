@@ -11,7 +11,6 @@
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-users"></i><a href="anggota.php">Anggota</a></li>
                             <li><i class="menu-icon fa fa-user"></i><a href="new_anggota.php">Anggota Baru</a></li>
-                            <li><i class="menu-icon fa fa-briefcase"></i><a href="penugasan.php">Penugasan Anggota</a></li>
                         </ul>
                         <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-group"></i>ADMIN</a>
@@ -33,31 +32,28 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-clipboard"></i>Laporan</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-users"></i><a href="admin_anggota.php">Laporan Awal</a></li>
+                            <li><i class="menu-icon fa fa-file-text-o"></i><a href="admin_anggota.php">Laporan Awal</a></li>
+                            <li><i class="menu-icon fa fa-spinner"></i><a href="admin_anggota.php">Laporan Proses</a></li>
+                            <li><i class="menu-icon fa fa-check-square-o"></i><a href="admin_anggota.php">Laporan Akhir</a></li>
                         </ul>
                     </li>
 
                     <li class="menu-title">Data Penugasan</li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </i>Penugasan</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-edit"></i>Penugasan</a>
                         <ul class="sub-menu children dropdown-menu">
-                        <li></i><a href="">Form Penugasan</a></li>
-                        <li></i><a href="">Form Penyelidikan</a></li>
-                        <li></i><a href="">Kerja Sama Instantsi</a></li>
+                            <li><i class="menu-icon fa fa-briefcase"></i><a href="penugasan.php">Penugasan Anggota</a></li>
+                            <li><i class="menu-icon fa fa-chain"></i><a href="">Kerja Sama Instantsi</a></li>
                         </ul>
                     </li>
 
                     <li class="menu-title">Data Tersangka</li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" aria-haspopup="true"> </i>Tersangka</a>
-                        <a href="#" class="dropdown-toggle" aria-haspopup="true"> </i>Data Pencarian Orang (DPO)</a>
-                        <ul class="sub-menu children dropdown-menu">
-                        </ul>
-                    </li>
+                        <li><a href="tersangka.php"><i class="menu-icon fa fa-book"></i> Tersangka</a></li>
+                        <li><a href="dpo.php" class="dropdown-toggle" aria-haspopup="true"><i class="menu-icon fa fa-exclamation-triangle"></i> Data Pencarian Orang (DPO)</a></li>
 
                     <li class="menu-title">Data Statistik</li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </i>Statistik </a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-bar-chart-o"></i>Statistik </a>
                         <ul class="sub-menu children dropdown-menu">
                         </ul>
                     </li>
