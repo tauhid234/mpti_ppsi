@@ -24,6 +24,7 @@ if(isset($_POST["submit"])){
         $_SESSION["nrp"] = $nrp;
         $_SESSION["status_user"] = $row["status_user"];
         $_SESSION["unit"] = $row["unit"];
+        $_SESSION["nama"] = $row["nama"];
         if($_SESSION["status_user"]=="admin"){
         header("location:../page/admin/dashboard.php");
         }else if($_SESSION["status_user"]=="intel"){

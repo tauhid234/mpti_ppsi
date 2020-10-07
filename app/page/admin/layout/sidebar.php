@@ -43,7 +43,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-edit"></i>Penugasan</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-briefcase"></i><a href="penugasan.php">Penugasan Anggota</a></li>
-                            <li><i class="menu-icon fa fa-chain"></i><a href="">Kerja Sama Instantsi</a></li>
+                            <li><i class="menu-icon fa fa-chain"></i><a href="instansi.php">Kerja Sama Instantsi</a></li>
                         </ul>
                     </li>
 

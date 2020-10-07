@@ -18,26 +18,33 @@
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
     type="text/css"
 />
-<div id="map"></div>
+<!-- <div id="map"></div> -->
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBYHSJymZYnSTdi3vH4Mh_H7b-jAgBOCag
+    &q=Space+Needle,Seattle+WA" allowfullscreen>
+</iframe>
 
 <script>
 	// TO MAKE THE MAP APPEAR YOU MUST
 	// ADD YOUR ACCESS TOKEN FROM
 	// https://account.mapbox.com
-	mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-79.4512, 43.6568],
-        zoom: 13
-    });
+	// mapboxgl.accessToken = 'pk.eyJ1IjoidGF1aGlkOTgiLCJhIjoiY2tlcTZsMW1iMHB6dzJ6b2l2ZWtmMDdoMyJ9.R4wgtk_pbaHweQ5jC5qV_A';
+    // var map = new mapboxgl.Map({
+    //     container: 'map',
+    //     style: 'mapbox://styles/mapbox/streets-v11',
+    //     center: [-79.4512, 43.6568],
+    //     zoom: 13
+    // });
 
-    map.addControl(
-        new MapboxDirections({
-            accessToken: mapboxgl.accessToken
-        }),
-        'top-left'
-    );
+    // map.addControl(
+    //     new MapboxDirections({
+    //         accessToken: mapboxgl.accessToken
+    //     }),
+    //     'top-left'
+    // );
 </script>
 
 </body>

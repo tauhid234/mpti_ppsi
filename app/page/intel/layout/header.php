@@ -1,6 +1,7 @@
 <?php 
 include("../../../server/config.php");
 $nrp = $_SESSION["nrp"];
+$unit = $_SESSION['unit'];
 $user = mysqli_query($conn,"SELECT foto FROM user WHERE nrp = '$nrp'");
 $data = mysqli_fetch_array($user);
 ?>
@@ -17,14 +18,24 @@ $data = mysqli_fetch_array($user);
                     <div class="header-left">
                         
 
+                        <?php 
+                        $count = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND status_tersangka = 'belum tertangkap'");
+                        $data_count = mysqli_num_rows($count);
+                        $data_trs = mysqli_fetch_array($count); 
+                        ?>
                         <div class="dropdown for-notification">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell"></i>
-                                <span class="count bg-danger">3</span>
+                                <span class="count bg-danger"><?= $data_count; ?></span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="notification">
-                                <p class="red">You have 3 Notification</p>
-                                
+                            <p class="red">Notifikasi Tugas</p>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="../../../image/mysterius.png"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left"><?= $data_trs['an_tersangka']; ?></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
 

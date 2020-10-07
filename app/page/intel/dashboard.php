@@ -1,17 +1,17 @@
 <?php
 session_start();
-include("../../../server/config.php");
+$infoSession = "<script>toastr.success('Success', 'tes')</script>";
 if(!isset($_SESSION["nrp"])){
-    header("Location:../../authentication/index.php");
+    header("location:../../authentication/index.php");
 }
-$unit = $_SESSION["unit"];
+$unit = $_SESSION['unit'];
 ?>
 <!doctype html>
  <html class="no-js" lang="">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SAT RESNARKOBA | Data Pencarian Orang (DPO)</title>
+    <title>SAT RESNARKOBA | DASHBOARD</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     
@@ -30,9 +30,12 @@ $unit = $_SESSION["unit"];
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzwRmT2nf0K-oT7TZ5gQc4WoQ3xRkyrnc&callback=initMap"></script>
 
-    <!--SWEET ALERT-->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!--MAPBOX API-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
     
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
@@ -55,24 +58,43 @@ $unit = $_SESSION["unit"];
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
-        <?php 
-        $query = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND status_tersangka = 'belum tertangkap'");?>
+        <?= $infoSession; ?>
             <!-- Animated -->
             <div class="animated fadeIn">
-            <div class="row" style="padding-bottom:10px;">
-                <div class="col-md-6">
-                    <h5>Data Pencarian Orang (DPO)</h5>
+                <!-- Widgets  -->
+                
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="map" style="width: 100%; height: 450px;"></div>
+                                </div>
+                            </div>
+                    </div>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <strong class="card-title">Daftar Tersangka belum tertangkap</strong>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                </div>
 
             <div class="row">
-            <?php 
-            foreach ($query as $key => $value) { ?>
+              <?php 
+              $query = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND status_tersangka = 'belum tertangkap'");
+              foreach ($query as $key => $value) { ?>
                 <div class="col-md-6">
                     <div class="card mb-3">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                            <img src="../../../image/mysterius.png" class="card-img" style="height:auto;" alt="foto tersangka">
+                            <img src="../../../image/mysterius.png" class="card-img" alt="foto tersangka">
                             </div>
                             <div class="col-md-8">
                             <div class="card-body">
@@ -90,31 +112,47 @@ $unit = $_SESSION["unit"];
                         </div>
                     </div>
                 </div>
-            <?php } ?>
+              <?php } ?>
             </div>
 
 
-        <div class="clearfix"></div>
                 
                
-                <!-- /.content -->
                 <div class="clearfix"></div>
-                <!-- Footer -->
-               <?php 
-               include('layout/footer.php');
-               ?>
-                <!-- /.site-footer -->
-            </div>
+                
+               
+        <!-- /.content -->
+        <div class="clearfix"></div>
+        <!-- Footer -->
+       <?php 
+       include('layout/footer.php');
+       ?>
+        <!-- /.site-footer -->
+    </div>
+    <!-- /#right-panel -->
 
- <!-- Scripts -->
- <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="../../../asset/js/main.js"></script>
 
     <!--Local Stuff-->
-  
+    <script type="text/javascript">
+
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: -5.7759361, lng: 106.1174583};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 4, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
+</script>
+
+    
     
 </body>
 </html>

@@ -12,6 +12,7 @@ if(isset($_POST["submit"])){
     $kdt = "KDT$sec[sec]";
     $kdl = "KDL$sec[sec]";
     $nama = strtolower($_POST["nama"]);
+    $tgl = date("Y-m-d");
     $alias = $_POST["alias"];
     $umur = $_POST["umur"];
     $alamat = $_POST["alamat"];
@@ -26,9 +27,9 @@ if(isset($_POST["submit"])){
         $foto = $_FILES['file']['name'];
         $file_tmp = $_FILES['file']['tmp_name'];
         move_uploaded_file($file_tmp,'../../../image/'.$foto);
-        $query = mysqli_query($conn,"INSERT INTO tersangka (kd_tersangka,kd_laporan,nama,alias,umur,pekerjaan,warganegara,alamat,foto) 
-                             VALUES ('$kdt','$kdl','$nama','$alias','$umur','$pekerjaan','$warganegara','$alamat','$foto')");
-        $alert = "<script>swal('Gagal', 'Data berhasil disimpan', 'success');</script>";
+        $query = mysqli_query($conn,"INSERT INTO tersangka (kd_tersangka,kd_laporan,tanggal,nama,alias,umur,pekerjaan,warganegara,alamat,foto,unit,status_tersangka) 
+                             VALUES ('$kdt','$kdl','$tgl','$nama','$alias','$umur','$pekerjaan','$warganegara','$alamat','$foto','$unit','belum tertangkap')");
+        $alert = "<script>swal('Sukses', 'Data berhasil disimpan', 'success');</script>";
     }
 
 
