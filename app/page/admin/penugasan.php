@@ -11,8 +11,10 @@ $alert = "";
 $unit = $_SESSION["unit"];
 
 if(isset($_POST["export"])){
-    $kasus = $_POST["laporan_kasus_narkotika_nomor"];
-    $nama = implode(',',$_POST["nama"]);
+
+    $cekdata = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit'");
+    $cekrow = mysqli_num_rows($cekdata);
+    $kasus = "NK".$cekrow;
     $tgl = date("Y-m-d");
     $tersangka = $_POST["an_tersangka"];
     $kel = $_POST["jenis"];
@@ -23,12 +25,25 @@ if(isset($_POST["export"])){
     $warga = $_POST["warganegara"];
     $alamat = $_POST["alamat"];
 
-    if($kasus==""||$tgl==""||$tersangka==""||$kel==""||$agama==""||$tgl_lahir==""||$pend==""||$kerja==""||$warga==""||$alamat==""){
+    $tim = $_POST["team"];
+
+    if($tgl==""||$tersangka==""||$kel==""||$agama==""||$tgl_lahir==""||$pend==""||$kerja==""||$warga==""||$alamat==""){
         $alert = "<script>swal('Peringatan','Field masih ada yang belum di isi','warning')</script>";
     }else{
-     mysqli_query($conn,"INSERT INTO surat_tugas (id,nomer_kasus,nama,tanggal,polsek,an_tersangka,jenis_kelamin,tgl_lahir,agama,pendidikan_terakhir,pekerjaan,warganegara,alamat,status_tersangka) VALUES 
-                    ('','$kasus','$nama','$tgl','$unit','$tersangka','$kel','$tgl_lahir','$agama','$pend','$kerja','$warga','$alamat','belum tertangkap')");
-    $alert = "<script>swal('Sukses','Data berhasil disimpan','success')</script>";
+        $queryCek = mysqli_query($conn,"SELECT nama_team FROM team WHERE nama_team = '$tim' AND unit = '$unit'");
+        $query = mysqli_query($conn,"SELECT nama_team FROM team WHERE status_team = 'sedang_penyelidikan' AND nama_team = '$tim' AND unit = '$unit'");
+        if(mysqli_num_rows($query) > 0){
+            $alert = "<script>swal('Informasi','Team tersebut sedang dalam penyelidikan kasus','info')</script>";
+        }elseif(mysqli_num_rows($queryCek) == 0){
+            $alert = "<script>swal('Informasi','Anggota belum ada pada tim tersebut','info')</script>";
+        }
+        else{
+        mysqli_query($conn,"INSERT INTO surat_tugas (id,nomer_kasus,nama_team,tanggal,polsek,an_tersangka,jenis_kelamin,tgl_lahir,agama,pendidikan_terakhir,pekerjaan,warganegara,alamat,status_tersangka) VALUES 
+                        ('','$kasus','$tim','$tgl','$unit','$tersangka','$kel','$tgl_lahir','$agama','$pend','$kerja','$warga','$alamat','belum tertangkap')");
+
+        mysqli_query($conn,"UPDATE team SET status_team = 'sedang_penyelidikan' WHERE unit = '$unit' AND nama_team = '$tim'");
+        $alert = "<script>swal('Sukses','Data Penugasan berhasil dibuat','success')</script>";
+        }
     }
 }
 ?>
@@ -91,10 +106,18 @@ if(isset($_POST["export"])){
             <form method="post" action="">
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="no_laporan">Laporan Kasus Narkotika Nomor</label>
-                        <input type="text" class="form-control" name="laporan_kasus_narkotika_nomor" id="laporan_kasus_narkotika_nomor" autocomplete="off">
+                    <label for="team">Ditugaskan kepada team</label>
+                            <select name="team" class="form-control">
+                                <option value="">-</option>
+                                <option value="Eradicate Drugs">Eradicate Drugs</option>
+                                <option value="Knights Prime of Power">Knights Prime of Power</option>
+                                <option value="Eagle Eye Knights">Eagle Eye Knights</option>
+                                <option value="Valkyrie Light">Valkyrie Light</option>
+                                <option value="Wild Crime">Wild Crime</option>
+                                <option value="Top Thunder Squad">Top Thunder Squad</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="no_laporan">Atas Nama Tersangka</label>
@@ -156,28 +179,6 @@ if(isset($_POST["export"])){
                         <textarea class="form-control" id="alamat" name="alamat"></textarea>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="label">DiTugaskan Kepada</label>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <div class="form-check">
-                        <?php $query = mysqli_query($conn,"SELECT * FROM USER WHERE status_user = 'intel' AND unit = '$unit'");
-                              foreach ($query as $key => $value) { ?>
-                              <div class="row">
-                                <div class="col-md-12">
-                              <input class="form-check-input" type="checkbox" name="nama[]" value="<?= $value['nama'];?>">
-                              <label class="form-check-label" for="gridCheck">
-                                <?= $value["nama"]; ?>
-                              </label>
-                                </div>
-                              </div>
-                        <?php } ?>
-                        </div>
-                    </div>
-                    </div>
                     <div class="form-row">
                         <div class="form-group">
                             <button type="submit" name="export" class="btn btn-primary">Buat Tugas Anggota</button>

@@ -5,6 +5,7 @@ if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
 
+$unit = $_SESSION["unit"];
 $alert = "";
 if(isset($_GET['nrp'])){
     $nrp = base64_decode($_GET['nrp']);
@@ -25,17 +26,19 @@ if(isset($_POST["submit"])){
 
     if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""){
         $alert = "<script>swal('Gagal', 'Field masih ada yang belum di isi', 'error');</script>";
-    }elseif ($foto==""||$addres=="") {
+    }elseif ($addres=="") {
+        if($foto==""){
         $query = mysqli_query($conn,"UPDATE user SET nama='$nama', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
                 tinggi_badan='$tb', email='$email', no_hp='$hp' WHERE nrp = '$nrp'");
         $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
+        }else{
+            move_uploaded_file($file_tmp,'../../../image/'.$foto);
+            $query = mysqli_query($conn,"UPDATE user SET nama='$nama', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
+            tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres' WHERE nrp = '$nrp'");
+            $alert = "<script>swal('Success', 'Data foto berhasil diupdate', 'success');</script>";
+        }
     }
-    else{
-        move_uploaded_file($file_tmp,'../../image/'.$foto);
-        $query = mysqli_query($conn,"UPDATE user SET nama='$nama', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
-        tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres' WHERE nrp = '$nrp' AND status_user = '$sesi'");
-        $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
-    }
+    
 }
 }
 ?>
@@ -95,7 +98,7 @@ if(isset($_POST["submit"])){
             <div class="animated fadeIn">
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5>Edit Profile <?= $data['nrp']; ?></h5>
+                    <h5>Edit Profile</h5>
                 </div>
             </div>
                <div class="row">

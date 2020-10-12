@@ -18,6 +18,7 @@
                             <li><i class="menu-icon fa fa-users"></i><a href="admin_anggota.php">Admin Anggota</a></li>
                             <li><i class="menu-icon fa fa-user"></i><a href="new_admin.php">Admin Anggota Baru</a></li>
                         </ul>
+                        <li><a href="team.php"><i class="menu-icon fa fa-sitemap"></i> Team</a></li>
                     </li>
                     </li>
                     <!--li class="menu-item-has-children dropdown">
@@ -32,7 +33,7 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-clipboard"></i>Laporan</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-file-text-o"></i><a href="admin_anggota.php">Laporan Awal</a></li>
+                            <li><i class="menu-icon fa fa-file-text-o"></i><a href="laporan_awal.php">Laporan Awal</a></li>
                             <li><i class="menu-icon fa fa-spinner"></i><a href="admin_anggota.php">Laporan Proses</a></li>
                             <li><i class="menu-icon fa fa-check-square-o"></i><a href="admin_anggota.php">Laporan Akhir</a></li>
                         </ul>
@@ -53,9 +54,7 @@
 
                     <li class="menu-title">Data Statistik</li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-bar-chart-o"></i>Statistik </a>
-                        <ul class="sub-menu children dropdown-menu">
-                        </ul>
+                    <li><a href="statistik.php"><i class="menu-icon fa fa-bar-chart-o"></i> Statistik</a></li>
                     </li>
                     
                 </ul>

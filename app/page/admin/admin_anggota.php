@@ -4,6 +4,8 @@ include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
+
+$unit = $_SESSION["unit"];
 ?>
 <!doctype html>
 <head>

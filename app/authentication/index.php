@@ -28,6 +28,7 @@ if(isset($_POST["submit"])){
         if($_SESSION["status_user"]=="admin"){
         header("location:../page/admin/dashboard.php");
         }else if($_SESSION["status_user"]=="intel"){
+            $_SESSION["nama_team"] = $row["nama_team"];
             header("Location:../page/intel/dashboard.php");
         }
         }

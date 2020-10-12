@@ -6,32 +6,7 @@ if(!isset($_SESSION["nrp"])){
 }
 
 $unit = $_SESSION["unit"];
-$team = $_SESSION["nama_team"];
 
-$alert = "";
-
-if(isset($_POST["submit"])){
-    $ket = $_POST["keterangan"];
-    $lat = $_POST["ltd"];
-    $lot = $_POST["lty"];
-    $tgl = date("Y-m-d");
-
-    $foto = $_FILES["file"]["name"];
-    $file = $_FILES["file"]["tmp_name"];
-
-    $query = mysqli_query($conn,"SELECT nomer_kasus FROM surat_tugas WHERE nama_team = '$team' AND polsek = '$unit' AND status_tersangka = 'belum tertangkap'");
-    $data = mysqli_fetch_array($query);
-    $kasus = $data["nomer_kasus"];
-
-    if($ket==""||$lat==""||$lot==""||$foto==""){
-        $alert = "<script>swal('Gagal','Inputan field masih ada yang belum di isi','error')</script>";
-    }else{
-        move_uploaded_file($file,'../../../image'.$foto);
-        mysqli_query($conn,"INSERT INTO laporan_awal (unit,nama_team,foto_lokasi,latitude,longtitude,keterangan,tanggal,status,nomer_kasus)
-                    VALUES ('$unit','$team','$foto','$lat','$lot','$ket','$tgl','sedang berjalan','$kasus')");
-        $alert = "<script>swal('Sukses','Data laporan awal disimpan','success')</script>";
-    }
-}
 ?>
 <!doctype html>
 <head>
@@ -76,56 +51,50 @@ if(isset($_POST["submit"])){
         ?>
         <!-- /#header -->
         <!-- Content -->
-        <?= $alert; ?>
         <div class="content">
          <!-- Animated -->
          <div class="animated fadeIn">
 
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5 class="mb-4">Input Laporan Awal</h5>
+                    <h5 class="mb-4">Laporan Awal</h5>
                 </div>
             </div>
 
             <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                    <form method="post" action="" enctype="multipart/form-data">
-
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                        <label for="nama">Foto Lokasi</label>
-                            <input type="file" class="form-control" id="file" name="file"/>
+            <?php 
+            $query = mysqli_query($conn,"SELECT * FROM laporan WHERE status_laporan = 'laporan_awal' AND unit = '$unit'");
+            foreach ($query as $q => $value) {
+            ?>
+                <div class="col-md-6">
+                    <div class="card">
+                        <!-- <img src="../../../image/<?= $value['foto_location']; ?>" style="width:100%; height:200px;"> -->
+                        <iframe
+                            width="100%"
+                            height="200"
+                            frameborder="0" style="border:0"
+                            src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBYHSJymZYnSTdi3vH4Mh_H7b-jAgBOCag&center=<?= $value['latitude'];?>,<?=  $value['longtitude'];?>&zoom=18&maptype=satellite" allowfullscreen>
+                            </iframe>
+                            <iframe
+                            width="100%"
+                            height="200"
+                            frameborder="0" style="border:0"
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBYHSJymZYnSTdi3vH4Mh_H7b-jAgBOCag
+                                &q=<?= $value['latitude'];?>,<?=  $value['longtitude'];?>" allowfullscreen>
+                            </iframe>
+                        <div class="card-body">
+                            <br><br><i class="menu-icon fa fa-map-marker"></i> <?= $value['unit'];?>
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Keterangan : <?= $value['keterangan']; ?></li>
+                                <li class="list-group-item"><?= $value['tanggal']; ?></li>
+                                </ul>
+                                
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                        <label for="latitude">Latitude</label>
-                            <input readonly type="text" class="form-control" id="ltd" name="ltd">
-                        </div>
-                        <div class="form-group col-md-6">
-                        <label for="longitude">Longitude</label>
-                            <input readonly type="text" class="form-control" id="lty" name="lty">
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                        <label for="keterangan">Keterangan</label>
-                        <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
-                        </div>
-                    </div>
-                    <p id="demo"></p>
-                        <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
-                        <button type="button" class="btn btn-warning" onclick="getLocation()">Cek Lokasi</button>
-                        </form>
-                    </div>
-                   </div>
                 </div>
-               </div> 
+            <?php } ?>
+            </div>
+            
         
             
         </div>

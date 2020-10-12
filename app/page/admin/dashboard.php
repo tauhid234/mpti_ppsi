@@ -31,12 +31,8 @@ $unit = $_SESSION["unit"];
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzwRmT2nf0K-oT7TZ5gQc4WoQ3xRkyrnc&callback=initMap"></script>
 
-    <!--MAPBOX API-->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
     
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
@@ -72,7 +68,7 @@ $unit = $_SESSION["unit"];
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><span class="count">23569</span></div>
+                                            <div class="stat-text"><span class="count">0</span></div>
                                             <div class="stat-heading">Barang Bukti</div>
                                         </div>
                                     </div>
@@ -111,18 +107,6 @@ $unit = $_SESSION["unit"];
                                     <div id="map" style="height: 400px;"></div>
                                 </div>
                             </div>
-                    </div>
-                </div>
-
-
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                            <canvas id="myChart" style="height: 400px;"></canvas>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -167,7 +151,7 @@ $unit = $_SESSION["unit"];
               <?php } ?>
             </div>
 
-                </div>
+                <!-- </div> -->
                
                 <div class="clearfix"></div>
                 
@@ -191,51 +175,50 @@ $unit = $_SESSION["unit"];
 
     <!--Local Stuff-->
     <script type="text/javascript">
-      var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Jan','Feb','Maret','Apr','Mei','Juni','Juli','Agust','Sept','Okt','Nov','Des'],
-                    datasets: [{
-                            label: 'Total Kasus',
-                            data: [0,
-                                   0,
-                                   0,
-                                   0,
-                                   0,
-                                   0,
-                                   0,
-                                   0,
-                                   0,
-                                   0,
-                                   0],
-                            
-                            backgroundColor: "#2980b9",
-                            
-                            borderColor: "#2980b9",
-                            
-                            borderWidth: 1
-                        }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text:'Statistik Data Kasus Narkotika Tahun <?= date("Y"); ?>',
-                        fontSize: 20
-            }
-                }
-            });
+      
+            var map;
+      function initMap() {
+        map = new google.maps.Map(
+            document.getElementById('map'),
+            {center: new google.maps.LatLng(-33.91722, 151.23064), zoom: 16});
+
+        var iconBase =
+            'https://developers.google.com/maps/documentation/javascript/examples/full/images/';
+
+        var icons = {
+          parking: {
+            icon: iconBase + 'parking_lot_maps.png'
+          },
+          library: {
+            icon: iconBase + 'library_maps.png'
+          },
+          info: {
+            icon: iconBase + 'info-i_maps.png'
+          }
+        };
 
 
-function initMap() {
-  // The location of Uluru
-  var uluru = {lat: -5.7759361, lng: 106.1174583};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 4, center: uluru});
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: uluru, map: map});
-}
+
+        var features = [
+          {
+            position: new google.maps.LatLng(-33.91721, 151.22630),
+            type: 'library'
+          }
+        ];
+
+        // Create markers.
+        for (var i = 0; i < features.length; i++) {
+          var marker = new google.maps.Marker({
+            position: features[i].position,
+            icon: icons[features[i].type].icon,
+            map: map,
+            title : "Tester"
+          });
+        };
+        marker.addListener("click", () => {
+    infowindow.open(map, marker);
+  });
+      }
 </script>
 
     

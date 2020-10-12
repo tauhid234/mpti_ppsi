@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2020 at 04:37 PM
+-- Generation Time: Oct 13, 2020 at 01:02 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -24,26 +24,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `laporan_awal`
+-- Table structure for table `laporan`
 --
 
-CREATE TABLE `laporan_awal` (
+CREATE TABLE `laporan` (
   `id` int(11) NOT NULL,
   `unit` varchar(100) NOT NULL,
+  `nama_team` varchar(100) NOT NULL,
+  `foto_lokasi` varchar(100) NOT NULL,
   `latitude` longtext NOT NULL,
   `longtitude` longtext NOT NULL,
   `keterangan` longtext NOT NULL,
-  `foto_location` varchar(100) NOT NULL,
   `tanggal` date NOT NULL,
-  `status` varchar(50) NOT NULL
+  `status_laporan` varchar(50) NOT NULL,
+  `nomer_kasus` varchar(100) NOT NULL,
+  `proses_laporan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `laporan_awal`
---
-
-INSERT INTO `laporan_awal` (`id`, `unit`, `latitude`, `longtitude`, `keterangan`, `foto_location`, `tanggal`, `status`) VALUES
-(1, 'Polsek Pancoran', '-7.090910999999999', '107.668887', 'berjalan ke dpo', 'manggarai.jpg', '2020-10-07', 'awal');
 
 -- --------------------------------------------------------
 
@@ -54,7 +50,7 @@ INSERT INTO `laporan_awal` (`id`, `unit`, `latitude`, `longtitude`, `keterangan`
 CREATE TABLE `surat_tugas` (
   `id` int(11) NOT NULL,
   `nomer_kasus` varchar(50) NOT NULL,
-  `nama` varchar(100) NOT NULL,
+  `nama_team` varchar(100) NOT NULL,
   `tanggal` date NOT NULL,
   `polsek` varchar(100) NOT NULL,
   `an_tersangka` varchar(100) NOT NULL,
@@ -72,8 +68,8 @@ CREATE TABLE `surat_tugas` (
 -- Dumping data for table `surat_tugas`
 --
 
-INSERT INTO `surat_tugas` (`id`, `nomer_kasus`, `nama`, `tanggal`, `polsek`, `an_tersangka`, `jenis_kelamin`, `tgl_lahir`, `agama`, `pendidikan_terakhir`, `pekerjaan`, `warganegara`, `alamat`, `status_tersangka`) VALUES
-(1, '445', 'tauhid,tes', '2020-10-07', 'Polsek Pancoran', 'tes', 'Laki - laki', '2020-07-07', 'Islam', 'sd', 'tes3', 'wna', 'fgg', 'belum tertangkap');
+INSERT INTO `surat_tugas` (`id`, `nomer_kasus`, `nama_team`, `tanggal`, `polsek`, `an_tersangka`, `jenis_kelamin`, `tgl_lahir`, `agama`, `pendidikan_terakhir`, `pekerjaan`, `warganegara`, `alamat`, `status_tersangka`) VALUES
+(1, 'NK0', 'Valkyrie Light', '2020-10-13', 'Polsek Pancoran', 'tes', 'Laki - laki', '2020-10-13', 'Budha', 's1', 'buruh', 'wni', 'tes 123', 'belum tertangkap');
 
 -- --------------------------------------------------------
 
@@ -83,9 +79,22 @@ INSERT INTO `surat_tugas` (`id`, `nomer_kasus`, `nama`, `tanggal`, `polsek`, `an
 
 CREATE TABLE `team` (
   `id` int(11) NOT NULL,
-  `nrp` varchar(50) NOT NULL,
-  `nama_team` varchar(100) NOT NULL
+  `nama_anggota` varchar(50) NOT NULL,
+  `unit` varchar(100) NOT NULL,
+  `nama_team` varchar(100) NOT NULL,
+  `status_team` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `team`
+--
+
+INSERT INTO `team` (`id`, `nama_anggota`, `unit`, `nama_team`, `status_team`) VALUES
+(1, 'tauhid', 'Polsek Pancoran', 'Knights Prime of Power', ''),
+(2, 'balqish', 'Polsek Pancoran', 'Knights Prime of Power', ''),
+(3, 'teri', 'Polsek Kebayoran Lama', 'Eagle Eye Knights', ''),
+(4, 'rheza', 'Polsek Pancoran', 'Eagle Eye Knights', ''),
+(5, 'darma', 'Polsek Pancoran', 'Valkyrie Light', '');
 
 -- --------------------------------------------------------
 
@@ -96,6 +105,7 @@ CREATE TABLE `team` (
 CREATE TABLE `tersangka` (
   `kd_tersangka` varchar(50) NOT NULL,
   `kd_laporan` varchar(50) NOT NULL,
+  `pasal` varchar(50) NOT NULL,
   `tanggal` varchar(50) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `alias` varchar(100) NOT NULL,
@@ -105,8 +115,16 @@ CREATE TABLE `tersangka` (
   `alamat` longtext NOT NULL,
   `foto` varchar(100) NOT NULL,
   `unit` varchar(100) NOT NULL,
-  `status_tersangka` varchar(50) NOT NULL
+  `status_tersangka` varchar(50) NOT NULL,
+  `barang_bukti` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tersangka`
+--
+
+INSERT INTO `tersangka` (`kd_tersangka`, `kd_laporan`, `pasal`, `tanggal`, `nama`, `alias`, `umur`, `pekerjaan`, `warganegara`, `alamat`, `foto`, `unit`, `status_tersangka`, `barang_bukti`) VALUES
+('KDT1602512027', 'KDL1602512027', 'Pasal 1 angka 5 jo Pasal 113', '2020-10-12', 'side', 'sd', '34', 'buruh', 'wni', 'tes', 'qrcode.png', 'Polsek Pancoran', 'tertangkap', 'sabu');
 
 -- --------------------------------------------------------
 
@@ -119,6 +137,7 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `pangkat` varchar(50) NOT NULL,
+  `nama_team` varchar(50) NOT NULL,
   `foto` varchar(100) NOT NULL,
   `tgl_lahir` varchar(50) NOT NULL,
   `umur` varchar(20) NOT NULL,
@@ -135,20 +154,23 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`nrp`, `password`, `nama`, `pangkat`, `foto`, `tgl_lahir`, `umur`, `berat_badan`, `tinggi_badan`, `email`, `no_hp`, `alamat`, `unit`, `status_user`) VALUES
-('1601335271', '$2y$10$568Dpj/XXzuzF/iRbKh1xO88exoZVVt1Fbo4uPEgohcrAPoNb5l3K', 'tauhid', 'BRIPDA', 'no-photo.jpg', '2020-09-29', '0', '55', '172', 'syifatauhid@gmail.com', '081546049359', 'tes', 'Polsek Pancoran', 'intel'),
-('1601338419', '$2y$10$QCVRD3.jyVLQPV2WTEshd.1H7ZV5bpC8F4LpUov0RrAJTENcTyZTe', 'deru10', 'BRIPKA', 'deru.jpg', '1997-08-22', '23', '60', '165', 'tes@gmail.com', '081546049359', 'tes admin', 'Polsek Metro Setiabudi', 'admin'),
-('1601593877', '$2y$10$SiswjONE4q1xCXvWjrf8Au8wMF40m8DY9OctYMMlTy2kxZLHofXUy', 'balqish', 'BRIPDA', 'no-photo.jpg', '2006-07-23', '14', '55', '160', 'syifatauhid@gmail.com', '085710156969', 'tes', 'Polsek Pancoran', 'admin'),
-('1601595521', '$2y$10$GtSFC6SL2njN.UtmTZfwNe84cZCDKkIZRX3gvhTTJpDYQ6m.v2Ubm', 'tes', 'BRIPKA', 'no-photo.jpg', '1998-10-20', '22', '45', '155', 'tes@gmail.com', '081546049359', 'tes', 'Polsek Pancoran', 'intel');
+INSERT INTO `user` (`nrp`, `password`, `nama`, `pangkat`, `nama_team`, `foto`, `tgl_lahir`, `umur`, `berat_badan`, `tinggi_badan`, `email`, `no_hp`, `alamat`, `unit`, `status_user`) VALUES
+('1602373018', '$2y$10$55EJ1BNsPgXPHZg0gF0dnudxIBb6uQ8ymkd8R534E2quCuW9MKZgu', 'tauhid', 'BRIPDA', 'Knights Prime of Power', 'no-photo.jpg', '1998-04-05', '22', '55', '173', 'syifatauhid@gmail.com', '081546049359', 'tes', 'Polsek Pancoran', 'intel'),
+('1602373175', '$2y$10$rf3fFtRKgK.kAV9mNUU8LeGNe1fCED9F.I7KoL8j9G29hkeGqxZdy', 'balqish', 'BRIPKA', 'Knights Prime of Power', 'qrcode.png', '2006-07-23', '14', '55', '160', 'balqishfitri1@gmail.com', '085610156969', 'tes', 'Polsek Pancoran', 'intel'),
+('1602373271', '$2y$10$PgrbmY5PMQ7JotZfYxhgDOUxJqKB2ohq4U9Ad5EXtBb4n9R1KAw/O', 'teri', 'BRIPDA', 'Eagle Eye Knights', 'no-photo.jpg', '1998-08-11', '22', '60', '165', 'teri@gamil.com', '085674743232', 'tes', 'Polsek Kebayoran Lama', 'intel'),
+('1602373343', '$2y$10$rxpo5PMTeW34w9cuoaSvXeQZhO3T3OEX29SXCO8pZEroLC5OEYIFa', 'deru', 'BRIPDA', '', 'deru.jpg', '1997-09-11', '23', '55', '170', 'maintainer12@gmail.com', '087896965454', 'tes', 'Polsek Pancoran', 'admin'),
+('1602373522', '$2y$10$.AWGCF9nAmJbnxivsmEdhOuJAqC82wZG1a7HFacEcUs9FLaPYH0gG', 'dion', 'BRIPDA', '', 'kucing.jpg', '1999-12-11', '21', '51', '160', 'dion@gmail.com', '089680355861', 'tes', 'Polsek Kebayoran Lama', 'admin'),
+('1602375639', '$2y$10$ZBgC3a6zibLJzp2W3xKFIOil1e9DUgzCZO16w4i77oUgejSgUnhRe', 'rheza', 'BRIPDA', 'Eagle Eye Knights', 'orang.jpg', '1996-10-11', '24', '55', '170', 'rheza@gmail.com', '089651733966', 'tes', 'Polsek Pancoran', 'intel'),
+('1602412416', '$2y$10$OFOqUuJrzuGalwlr47cOFOiBVAnynvDguNANue8SfvcRaA/nG4.IO', 'darma', 'BRIPDA', 'Valkyrie Light', 'manggarai.jpg', '1987-06-11', '33', '55', '175', 'darma@gmail.com', '087656568989', 'tes', 'Polsek Pancoran', 'intel');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `laporan_awal`
+-- Indexes for table `laporan`
 --
-ALTER TABLE `laporan_awal`
+ALTER TABLE `laporan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -168,10 +190,10 @@ ALTER TABLE `team`
 --
 
 --
--- AUTO_INCREMENT for table `laporan_awal`
+-- AUTO_INCREMENT for table `laporan`
 --
-ALTER TABLE `laporan_awal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `laporan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `surat_tugas`
@@ -183,7 +205,7 @@ ALTER TABLE `surat_tugas`
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

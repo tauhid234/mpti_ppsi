@@ -5,9 +5,12 @@ if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
 
+$unit = $_SESSION["unit"];
+
+        
 $alert = "";
 if(isset($_GET['nrp'])){
-    $no = base64_decode($_GET['nrp']);
+    $nrp = base64_decode($_GET['nrp']);
 
 if(isset($_POST["submit"])){
     $nama = strtolower($_POST["name"]);
@@ -27,18 +30,20 @@ if(isset($_POST["submit"])){
 
     if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""){
         $alert = "<script>swal('Gagal', 'Field masih ada yang belum di isi', 'error');</script>";
-    }elseif ($foto==""||$unit==""||$addres=="") {
+    }elseif ($unit==""||$addres=="") {
+        if($foto==""){
         $query = mysqli_query($conn,"UPDATE user SET nama='$nama', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
                 tinggi_badan='$tb', email='$email', no_hp='$hp' WHERE nrp = '$nrp'");
         $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
+        }else{
+            move_uploaded_file($file_tmp,'../../../image/'.$foto);
+            $query = mysqli_query($conn,"UPDATE user SET nama='$nama', pangkat='$pangkat', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
+            tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres', unit='$unit' WHERE nrp = '$nrp'");
+            $alert = "<script>swal('Success', 'Data foto berhasil diupdate', 'success');</script>";
+        }
     }
-    else{
-        move_uploaded_file($file_tmp,'../../image/'.$foto);
-        $query = mysqli_query($conn,"UPDATE user SET nama='$nama', pangkat='$pangkat', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
-        tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres', unit='$unit' WHERE nrp = '$nrp'");
-        $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
     }
-}
+    
 }
 ?>
 <!doctype html>
@@ -72,6 +77,13 @@ if(isset($_POST["submit"])){
 </head>
 
 <body>
+
+<?php 
+            $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$nrp'");        
+            if(mysqli_num_rows($query)==0){
+                header("Location:admin_anggota.php");
+            }
+            ?>
     <!-- Left Panel -->
     <?php 
     include('layout/sidebar.php');
@@ -83,17 +95,13 @@ if(isset($_POST["submit"])){
         <!-- Header-->
         <?php 
         include('layout/header.php');
+        
+        $data = mysqli_fetch_array($query);
         ?>
         <?= $alert; ?>
         <!-- /#header -->
         <!-- Content -->
-        <?php 
-        $query = mysqli_query($conn,"SELECT * FROM user WHERE nrp = '$no'");        
-        if(mysqli_num_rows($query)==0){
-            header("Location:anggota.php");
-        }
-        $data = mysqli_fetch_array($query);
-        ?>
+        
         <div class="content">
             <!-- Animated -->
             <div class="animated fadeIn">
@@ -217,7 +225,7 @@ if(isset($_POST["submit"])){
                         </div>
                         <div class="form-group">
                             <label for="inputAddress">Address</label>
-                            <textarea class="form-control" id="address" name="address" value="<?= $data['address'];?>"></textarea>
+                            <textarea class="form-control" id="address" name="address" value="<?= $data['alamat'];?>"></textarea>
                         </div>
                         <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                         </form>

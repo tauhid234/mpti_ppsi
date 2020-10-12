@@ -62,13 +62,8 @@ if(isset($_POST["submit"])){
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    
     <!--SWEET ALERT-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-    <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
 </head>
 
@@ -93,38 +88,76 @@ if(isset($_POST["submit"])){
             <div class="animated fadeIn">
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <a href="input_tersangka.php" class="btn btn-primary mb-4">Input Tersangka Baru</a>
-                    <h5>Daftar Tersangka</h5>
+                    <h5>Input Data Tersangka</h5>
                 </div>
             </div>
 
         <div class="row">
+          <div class="col-md-12" style="padding-top:10px;">
+            <form method="post" action="" enctype="multipart/form-data">
+            <div id="imagePreview" style="width:100px; height:100px;"></div>
 
-        <?php 
-            $query = mysqli_query($conn,"SELECT * FROM tersangka WHERE status_tersangka = 'tertangkap' AND unit = '$unit'");
-            foreach ($query as $q => $value) {
-            ?>
-                <div class="col-md-6">
-                    <div class="card" style="width: 100%;">
-                        <img class="card-img-top" src="../../../image/<?= $value['foto']; ?>" style="width:200px; height:200px; border-radius:250px; margin-left:10px; margin-top:10px;" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= strtoupper($value['nama']);?><br><br>Alias <?= $value['alias'];?></h5>
-                                <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Kode Tersangka : <?= $value['kd_tersangka'];?></li>
-                                <li class="list-group-item">Kode Laporan : <?= $value['kd_laporan'];?></li>
-                                <li class="list-group-item">Pasal : <?= $value['pasal'];?></li>
-                                <li class="list-group-item">Umur : <?= $value['umur'];?></li>
-                                <li class="list-group-item">Pekerjaan : <?= $value['pekerjaan'];?></li>
-                                <li class="list-group-item">Warganegara : <?= $value['warganegara'];?></li>
-                                <li class="list-group-item">Barang Bukti : <?= $value['barang_bukti'];?></li>
-                                <li class="list-group-item">Tanggal Tertangkap : <?= $value['tanggal'];?></li>
-                                <li class="list-group-item"><a href="#" onclick="window.print()" class="btn btn-primary">Print Data</a></li>
-                                </ul>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                    <label for="nama">Foto</label>
+                        <input type="file" class="form-control" id="file" name="file" onchange="return fileValidation()"/>
                     </div>
                 </div>
-            <?php } ?>
-          
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="nama">Nama Tersangka</label>
+                        <input type="text" class="form-control" name="nama" id="nama" autocomplete="off">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="alias">Alias</label>
+                        <input type="text" class="form-control" name="alias" id="alias" autocomplete="off">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="umur">Umur</label>
+                        <input type="number" class="form-control" name="umur" id="alias" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="pekerjaan">Pekerjaan</label>
+                        <input type="text" class="form-control" name="pekerjaan" id="pekerjaan" autocomplete="off">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="warganegara">Warganegara</label>
+                        <select class="form-control" name="warganegara" id="warganegara">
+                            <option value="">-</option>
+                            <option value="wni">WNI</option>
+                            <option value="wna">WNA</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-4">
+                        <label for="pasal">Pasal</label>
+                        <select class="form-control" name="pasal" id="pasal">
+                            <option value="">-</option>
+                            <option value="Pasal 1 angka 3 jo Pasal 113">Pasal 1 angka 3 jo Pasal 113</option>
+                            <option value="Pasal 1 angka 4 jo Pasal 113">Pasal 1 angka 4 jo Pasal 113</option>
+                            <option value="Pasal 1 angka 5 jo Pasal 113">Pasal 1 angka 5 jo Pasal 113</option>
+                            <option value="Pasal 1 angka 9, 12 jo Pasal 115">Pasal 1 angka 9, 12 jo Pasal 115</option>
+                            <option value="Pasal 1 angka 6 jo 111,112, 129">Pasal 1 angka 6 jo 111,112, 129</option>
+                            <option value="Pasal 1 angka 13 jo Pasal 54 jo Pasal 127">Pasal 1 angka 13 jo Pasal 54 jo Pasal 127</option>
+                            <option value="Pasal 1 angka 15 jo Pasal 54 jo Pasal 127">Pasal 1 angka 15 jo Pasal 54 jo Pasal 127</option>
+                        </select>
+                     </div>
+                </div>
+                <div class="form-group">
+                        <label for="inputAddress">Barang Bukti</label>
+                        <textarea class="form-control" id="bbt" name="bbt"></textarea>
+                </div>
+                <div class="form-group">
+                        <label for="inputAddress">Alamat</label>
+                        <textarea class="form-control" id="alamat" name="alamat"></textarea>
+                </div>
+                        <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+
+                </div>
+            </form>
+          </div>
         </div>
 
 

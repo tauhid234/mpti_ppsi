@@ -2,6 +2,7 @@
 include("../../../server/config.php");
 $nrp = $_SESSION["nrp"];
 $unit = $_SESSION['unit'];
+$team = $_SESSION["nama_team"];
 $user = mysqli_query($conn,"SELECT foto FROM user WHERE nrp = '$nrp'");
 $data = mysqli_fetch_array($user);
 ?>
@@ -19,7 +20,7 @@ $data = mysqli_fetch_array($user);
                         
 
                         <?php 
-                        $count = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND status_tersangka = 'belum tertangkap'");
+                        $count = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND nama_team = '$team' AND status_tersangka = 'belum tertangkap'");
                         $data_count = mysqli_num_rows($count);
                         $data_trs = mysqli_fetch_array($count); 
                         ?>
@@ -30,12 +31,14 @@ $data = mysqli_fetch_array($user);
                             </button>
                             <div class="dropdown-menu" aria-labelledby="notification">
                             <p class="red">Notifikasi Tugas</p>
-                                <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="../../../image/mysterius.png"></span>
-                                    <div class="message media-body">
-                                        <span class="name float-left"><?= $data_trs['an_tersangka']; ?></span>
-                                    </div>
-                                </a>
+                                        <?php if($data_count > 0){?>
+                                            <a class="dropdown-item media" href="#">
+                                            <span class="photo media-left"><img alt="avatar" src="../../../image/mysterius.png"></span>
+                                            <div class="message media-body">
+                                            <span class="name float-left">Tugas Penyelidikan untuk <?= $data_trs['an_tersangka']; ?></span>
+                                            </div>
+                                        </a>
+                                        <?php }else{}?>
                             </div>
                         </div>
 

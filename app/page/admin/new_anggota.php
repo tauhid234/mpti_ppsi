@@ -5,6 +5,7 @@ if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
 
+$unit = $_SESSION["unit"];
 $alert = "";
 if(isset($_POST["submit"])){
     $nama = strtolower($_POST["name"]);
@@ -16,13 +17,14 @@ if(isset($_POST["submit"])){
     $hp = $_POST["handphone"];
     $addres = $_POST["address"];
     $unit = $_POST["unit"];
+    $tim = $_POST["team"];
     $pangkat = $_POST["pangkat"];
     $pass = $_POST["password"];
     $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
 
 
 
-    if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit=="" || $pangkat=="" || $pass==""){
+    if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit=="" || $pangkat=="" || $tim=="" || $pass==""){
         $alert = "<script>swal('Gagal', 'NRP atau password Anda salah', 'error');</script>";
     }else{
         $timeday = gettimeofday();
@@ -30,9 +32,10 @@ if(isset($_POST["submit"])){
         $foto = $_FILES['file']['name'];
         $file_tmp = $_FILES['file']['tmp_name'];
         move_uploaded_file($file_tmp,'../../../image/'.$foto);
-        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
-                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','intel')");
-        $alert = "<script>toastr.success('Sukses','Data tersimpan')</script>";
+        $queryTeam = mysqli_query($conn,"INSERT INTO team (id,nama_anggota,unit,nama_team) VALUES ('','$nama','$unit','$tim')");
+        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,nama_team,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
+                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$tim','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','intel')");
+        $alert = "<script>swal('Sukses','Data berhasil tersimpan','success')</script>";
     }
 
 
@@ -204,6 +207,20 @@ if(isset($_POST["submit"])){
                                 <option value="Polsek Taman Sari">Polsek Taman Sari</option>
                                 <option value="Polsek Kembangan">Polsek Kembangan</option>
                               </optgroup>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="team">Masukkan ke Team</label>
+                            <select name="team" class="form-control">
+                                <option value="">-</option>
+                                <option value="Eradicate Drugs">Eradicate Drugs</option>
+                                <option value="Knights Prime of Power">Knights Prime of Power</option>
+                                <option value="Eagle Eye Knights">Eagle Eye Knights</option>
+                                <option value="Valkyrie Light">Valkyrie Light</option>
+                                <option value="Wild Crime">Wild Crime</option>
+                                <option value="Top Thunder Squad">Top Thunder Squad</option>
                             </select>
                             </div>
                         </div>

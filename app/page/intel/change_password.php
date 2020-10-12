@@ -118,38 +118,7 @@ if(isset($_POST["submit"])){
     </div>
     <!-- /#right-panel -->
 
-    <script>
-
-    function cekumur(){
-      console.log("tes");
-      var tgl_lahir = document.getElementById('tgl_lahir').value;
-      var gethari = new Date();
-      var ulg_tahun = new Date(tgl_lahir);
-      var umur = gethari.getFullYear() - ulg_tahun.getFullYear();
-      document.getElementById('umur').value = umur;
-      console.log(umur);
-    }
-    
-    function fileValidation(){
-    var fileInput = document.getElementById('file');
-    var filePath = fileInput.value;
-    var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-    if(!allowedExtensions.exec(filePath)){
-        toastr.warning("Peringatan","Extensi file yang di perbolehkan format jpg / jpeg / png");
-        fileInput.value = '';
-        return false;
-    }else{
-        //Image preview
-        if (fileInput.files && fileInput.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('imagePreview').innerHTML = '<img src="'+e.target.result+'"/>';
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-    }
-}
-    </script>
+   
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>

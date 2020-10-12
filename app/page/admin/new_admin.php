@@ -5,6 +5,9 @@ if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
 
+
+$unit = $_SESSION["unit"];
+
 $alert = "";
 if(isset($_POST["submit"])){
     $nama = strtolower($_POST["name"]);
@@ -24,8 +27,8 @@ if(isset($_POST["submit"])){
     $file_tmp = $_FILES['file']['tmp_name'];
 
 
-    if($nama==""||$foto==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit==""){
-        $alert = "<script>swal('Gagal','Field masih ada yang belum di isi','error');</script>";
+    if($nama==""||$foto==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit==""||$pass=""||$tim=""){
+        $alert = "<script>swal('Peringatan','Field masih ada yang belum di isi','warning');</script>";
     }else{
         $timeday = gettimeofday();
         $getnrp = $timeday;
@@ -208,7 +211,7 @@ if(isset($_POST["submit"])){
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="inputEmail4">Password</label>
+                                <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password">
                             </div>
                         </div>

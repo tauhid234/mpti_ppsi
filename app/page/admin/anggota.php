@@ -4,6 +4,8 @@ include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
+
+$unit = $_SESSION["unit"];
 ?>
 <!doctype html>
 <head>
@@ -62,7 +64,7 @@ if(!isset($_SESSION["nrp"])){
         
             <div class="row">
             <?php 
-            $query = mysqli_query($conn,"SELECT * FROM user WHERE status_user = 'intel'");
+            $query = mysqli_query($conn,"SELECT * FROM user WHERE status_user = 'intel' AND unit = '$unit'");
             foreach ($query as $q => $value) {
             ?>
                 <div class="col-md-6">

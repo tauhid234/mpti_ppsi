@@ -6,38 +6,21 @@ if(!isset($_SESSION["nrp"])){
 }
 
 $unit = $_SESSION["unit"];
-$team = $_SESSION["nama_team"];
 
-$alert = "";
-
-if(isset($_POST["submit"])){
-    $ket = $_POST["keterangan"];
-    $lat = $_POST["ltd"];
-    $lot = $_POST["lty"];
-    $tgl = date("Y-m-d");
-
-    $foto = $_FILES["file"]["name"];
-    $file = $_FILES["file"]["tmp_name"];
-
-    $query = mysqli_query($conn,"SELECT nomer_kasus FROM surat_tugas WHERE nama_team = '$team' AND polsek = '$unit' AND status_tersangka = 'belum tertangkap'");
-    $data = mysqli_fetch_array($query);
-    $kasus = $data["nomer_kasus"];
-
-    if($ket==""||$lat==""||$lot==""||$foto==""){
-        $alert = "<script>swal('Gagal','Inputan field masih ada yang belum di isi','error')</script>";
-    }else{
-        move_uploaded_file($file,'../../../image'.$foto);
-        mysqli_query($conn,"INSERT INTO laporan_awal (unit,nama_team,foto_lokasi,latitude,longtitude,keterangan,tanggal,status,nomer_kasus)
-                    VALUES ('$unit','$team','$foto','$lat','$lot','$ket','$tgl','sedang berjalan','$kasus')");
-        $alert = "<script>swal('Sukses','Data laporan awal disimpan','success')</script>";
+if(isset($_GET["_hash"])){
+    $nama = base64_decode($_GET["_hash"]);
+    $data = mysqli_query($conn,"SELECT * FROM user WHERE nama = '$nama' AND unit = '$unit'");
+    if(mysqli_num_rows($data)==0){
+        header("Location:team.php");
     }
 }
+
 ?>
 <!doctype html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SAT RESNARKOBA | LAPORAN AWAL</title>
+    <title>SAT RESNARKOBA | DETAIL ANGGOTA TEAM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
    
@@ -76,56 +59,49 @@ if(isset($_POST["submit"])){
         ?>
         <!-- /#header -->
         <!-- Content -->
-        <?= $alert; ?>
         <div class="content">
          <!-- Animated -->
          <div class="animated fadeIn">
 
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5 class="mb-4">Input Laporan Awal</h5>
+                    <h5 class="mb-4">Detail Anggota Team</h5>
                 </div>
             </div>
 
             <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                    <form method="post" action="" enctype="multipart/form-data">
-
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                        <label for="nama">Foto Lokasi</label>
-                            <input type="file" class="form-control" id="file" name="file"/>
+            <?php 
+            if(isset($_GET["_hash"])){
+                $nama = base64_decode($_GET["_hash"]);
+                $query = mysqli_query($conn,"SELECT * FROM user WHERE status_user = 'intel' AND unit = '$unit' AND nama = '$nama'");
+                
+                foreach ($query as $q => $value) {
+            ?>
+                <div class="col-md-12">
+                    <div class="card" style="width: 100%;">
+                        <img class="card-img-top" src="../../../image/<?= $value['foto']; ?>" style="width:200px; height:200px; border-radius:250px; margin-left:10px; margin-top:10px;" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= strtoupper($value['nama']);?><br><br><i class="menu-icon fa fa-map-marker"></i> <?= $value['unit'];?></h5>
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item">NRP : <?= $value['nrp'];?></li>
+                                <li class="list-group-item">Pangkat : <?= $value['pangkat'];?></li>
+                                <li class="list-group-item">Tanggal Lahir : <?= $value['tgl_lahir']; ?></li>
+                                <li class="list-group-item">Umur : <?= $value['umur'];?> Th</li>
+                                <li class="list-group-item">Berat Badan : <?= $value['berat_badan'];?> Kg</li>
+                                <li class="list-group-item">Tinggi Badan : <?= $value['tinggi_badan'];?> Cm</li>
+                                <li class="list-group-item">Kecepatan Lari 100 M : <span id="data"><?= $value['berat_badan'] * $value['tinggi_badan'] / $value['berat_badan'] / 60;?></span> Detik</li>
+                                <li class="list-group-item">Email : <?= $value['email'];?></li>
+                                <li class="list-group-item">No.HP : <?= $value['no_hp'];?></li>
+                                </ul>
+                            <a href="edit_anggota.php?nrp=<?= base64_encode($value['nrp']);?>" class="btn btn-primary" style="color:white; margin-top:10px;">Edit</a>
+                            <a href="https://api.whatsapp.com/send?phone=<?= str_replace("0","62",$value['no_hp']);?>" class="btn btn-success" style="color:white; margin-top:10px;">Whatsapp</a>
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                        <label for="latitude">Latitude</label>
-                            <input readonly type="text" class="form-control" id="ltd" name="ltd">
-                        </div>
-                        <div class="form-group col-md-6">
-                        <label for="longitude">Longitude</label>
-                            <input readonly type="text" class="form-control" id="lty" name="lty">
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                        <label for="keterangan">Keterangan</label>
-                        <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
-                        </div>
-                    </div>
-                    <p id="demo"></p>
-                        <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
-                        <button type="button" class="btn btn-warning" onclick="getLocation()">Cek Lokasi</button>
-                        </form>
-                    </div>
-                   </div>
                 </div>
-               </div> 
+            <?php }
+            }?>
+            </div>
+            
         
             
         </div>
