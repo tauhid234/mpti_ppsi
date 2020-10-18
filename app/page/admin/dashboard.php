@@ -78,7 +78,7 @@ $unit = $_SESSION["unit"];
                     </div>
 
                     <?php 
-                    $count = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE status_tersangka = 'sudah tertangkap'");
+                    $count = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE status_tersangka = 'tertangkap'");
                     $data = mysqli_num_rows($count);?>
 
                     <div class="col-md-6">
@@ -180,17 +180,19 @@ $unit = $_SESSION["unit"];
       function initMap() {
         map = new google.maps.Map(
             document.getElementById('map'),
-            {center: new google.maps.LatLng(-33.91722, 151.23064), zoom: 16});
+            {center: new google.maps.LatLng(-7.090910999999999, 107.668887), zoom: 16});
+
+            const contentString = "<h1>Hello word</h1>";
 
         var iconBase =
-            'https://developers.google.com/maps/documentation/javascript/examples/full/images/';
+            '../../../asset/icon/';
 
         var icons = {
           parking: {
             icon: iconBase + 'parking_lot_maps.png'
           },
-          library: {
-            icon: iconBase + 'library_maps.png'
+          intel: {
+            icon: iconBase + 'police_intel.png'
           },
           info: {
             icon: iconBase + 'info-i_maps.png'
@@ -201,10 +203,15 @@ $unit = $_SESSION["unit"];
 
         var features = [
           {
-            position: new google.maps.LatLng(-33.91721, 151.22630),
-            type: 'library'
-          }
+            position: new google.maps.LatLng(-7.090910999999999, 107.668887),
+            type: 'intel',
+            title : "Tester"
+          },
         ];
+
+        const infowindow = new google.maps.InfoWindow({
+          content: contentString,
+        });
 
         // Create markers.
         for (var i = 0; i < features.length; i++) {
@@ -212,7 +219,7 @@ $unit = $_SESSION["unit"];
             position: features[i].position,
             icon: icons[features[i].type].icon,
             map: map,
-            title : "Tester"
+            title: "tes"
           });
         };
         marker.addListener("click", () => {

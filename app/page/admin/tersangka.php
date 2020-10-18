@@ -118,7 +118,7 @@ if(isset($_POST["submit"])){
                                 <li class="list-group-item">Warganegara : <?= $value['warganegara'];?></li>
                                 <li class="list-group-item">Barang Bukti : <?= $value['barang_bukti'];?></li>
                                 <li class="list-group-item">Tanggal Tertangkap : <?= $value['tanggal'];?></li>
-                                <li class="list-group-item"><a href="#" onclick="window.print()" class="btn btn-primary">Print Data</a></li>
+                                <!-- <li class="list-group-item"><a href="#" onclick="window.print()" class="btn btn-primary">Print Data</a></li> -->
                                 </ul>
                         </div>
                     </div>

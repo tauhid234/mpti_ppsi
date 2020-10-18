@@ -31,7 +31,8 @@ if(isset($_POST["submit"])){
         $file_tmp = $_FILES['file']['tmp_name'];
         move_uploaded_file($file_tmp,'../../../image/'.$foto);
         $query = mysqli_query($conn,"INSERT INTO tersangka (kd_tersangka,kd_laporan,pasal,tanggal,nama,alias,umur,pekerjaan,warganegara,alamat,foto,unit,status_tersangka,barang_bukti) 
-                             VALUES ('$kdt','$kdl','$pasal','$tgl','$nama','$alias','$umur','$pekerjaan','$warganegara','$alamat','$foto','$unit','belum tertangkap','$bbt')");
+                             VALUES ('$kdt','$kdl','$pasal','$tgl','$nama','$alias','$umur','$pekerjaan','$warganegara','$alamat','$foto','$unit','tertangkap','$bbt')");
+        $update = mysqli_query($conn,"UPDATE surat_tugas SET status_tersangka = 'tertangkap' WHERE an_tersangka = '$nama'");
         $alert = "<script>swal('Sukses', 'Data berhasil disimpan', 'success');</script>";
     }
 
@@ -106,7 +107,13 @@ if(isset($_POST["submit"])){
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="nama">Nama Tersangka</label>
-                        <input type="text" class="form-control" name="nama" id="nama" autocomplete="off">
+                        <select class="form-control" name="nama">
+                            <?php $queryData = mysqli_query($conn,"SELECT an_tersangka FROM surat_tugas WHERE status_tersangka = 'sudah tertangkap'");?>
+                            <option value="">-</option>
+                            <?php foreach($queryData as $key => $value){ ?>
+                            <option value="<?= $value['an_tersangka'];?>"><?= $value['an_tersangka'];?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="alias">Alias</label>

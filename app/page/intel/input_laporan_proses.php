@@ -28,9 +28,10 @@ if(isset($_POST["submit"])){
         $alert = "<script>swal('Gagal','Inputan field masih ada yang belum di isi','error')</script>";
     }else{
         move_uploaded_file($file,'../../../image/'.$foto);
-        mysqli_query($conn,"INSERT INTO laporan (id,unit,nama_team,foto_lokasi,latitude,longtitude,keterangan,tanggal,status_laporan,nomer_kasus,proses_laporan)
-                    VALUES ('','$unit','$team','$foto','$lat','$lot','$ket','$tgl','awal','$ks','')");
-        $alert = "<script>swal('Sukses','Data laporan awal disimpan','success')</script>";
+        mysqli_query($conn,"INSERT INTO laporan_proses (id,unit,nama_team,foto_lokasi_proses,latitude_proses,longtitude_proses,keterangan_proses,tanggal,status_laporan,nomer_kasus)
+                    VALUES ('','$unit','$team','$foto','$lat','$lot','$ket','$tgl','sedang berjalan','$ks')");
+        mysqli_query($conn,"UPDATE laporan SET proses_laporan = 'diproses' WHERE nama_team = '$team' AND unit = '$unit' AND nomer_kasus = '$ks'");
+        $alert = "<script>swal('Sukses','Data laporan proses disimpan','success')</script>";
     }
 }
 ?>
@@ -38,7 +39,7 @@ if(isset($_POST["submit"])){
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SAT RESNARKOBA | LAPORAN AWAL</title>
+    <title>SAT RESNARKOBA | LAPORAN PROSES</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
    
@@ -84,7 +85,7 @@ if(isset($_POST["submit"])){
 
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5 class="mb-4">Input Laporan Awal</h5>
+                    <h5 class="mb-4">Input Laporan Proses</h5>
                 </div>
             </div>
 

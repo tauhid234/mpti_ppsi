@@ -34,8 +34,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-clipboard"></i>Laporan</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-file-text-o"></i><a href="laporan_awal.php">Laporan Awal</a></li>
-                            <li><i class="menu-icon fa fa-spinner"></i><a href="admin_anggota.php">Laporan Proses</a></li>
-                            <li><i class="menu-icon fa fa-check-square-o"></i><a href="admin_anggota.php">Laporan Akhir</a></li>
+                            <li><i class="menu-icon fa fa-spinner"></i><a href="laporan_proses.php">Laporan Proses</a></li>
+                            <li><i class="menu-icon fa fa-check-square-o"></i><a href="laporan_akhir.php">Laporan Akhir</a></li>
                         </ul>
                     </li>
 

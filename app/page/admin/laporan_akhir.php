@@ -6,29 +6,14 @@ if(!isset($_SESSION["nrp"])){
 }
 
 $unit = $_SESSION["unit"];
+
 $alert = "";
-if(isset($_POST['hentikan'])){
-    $status = 'tidak lanjut';
-    $nokasus = $_POST["nomer"];
-    $team = $_POST["team"];
-    $update = mysqli_query($conn,"UPDATE laporan SET proses_laporan = '$status', status_laporan = 'awal' WHERE nomer_kasus = '$nokasus'");
-    $update2 = mysqli_query($conn,"UPDATE team SET status_team = '' WHERE nama_team = '$team' AND unit = '$unit'");
-    $hapus = mysqli_query($conn,"DELETE from surat_tugas WHERE nomer_kasus = '$nokasus'");
-    $alert = "<script>swal('Sukses','Data laporan dihentikan','success')</script>";
-}
-if(isset($_POST['lanjutkan'])){
-    $status = 'proses';
-    $nokasus = $_POST["nomer"];
-    $team = $_POST["team"];
-    $update = mysqli_query($conn,"UPDATE laporan SET proses_laporan = '$status' WHERE nomer_kasus = '$nokasus'");
-    $alert = "<script>swal('Sukses','Data laporan dilanjutkan','success')</script>";
-}
 ?>
 <!doctype html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SAT RESNARKOBA | LAPORAN AWAL</title>
+    <title>SAT RESNARKOBA | LAPORAN AKHIR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
    
@@ -44,8 +29,6 @@ if(isset($_POST['lanjutkan'])){
     <link rel="stylesheet" href="../../../asset/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="../../../asset/css/style.css">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
     
     <!--SWEET ALERT-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -67,29 +50,26 @@ if(isset($_POST['lanjutkan'])){
         ?>
         <!-- /#header -->
         <!-- Content -->
+        <?= $alert; ?>
         <div class="content">
          <!-- Animated -->
          <div class="animated fadeIn">
-            <?= $alert; ?>
+
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5 class="mb-4">Laporan Awal</h5>
+                    <h5 class="mb-4">Laporan Akhir</h5>
                 </div>
             </div>
 
             <div class="row">
             <?php 
-            $query = mysqli_query($conn,"SELECT laporan.*, surat_tugas.an_tersangka,surat_tugas.jenis_kelamin,surat_tugas.tgl_lahir,surat_tugas.agama,surat_tugas.pendidikan_terakhir,surat_tugas.pekerjaan,surat_tugas.warganegara,surat_tugas.alamat FROM laporan,surat_tugas WHERE laporan.status_laporan = 'awal' AND laporan.unit = '$unit' AND laporan.nomer_kasus = surat_tugas.nomer_kasus");
+            $query = mysqli_query($conn,"SELECT laporan_proses.*, laporan.latitude, laporan.longtitude, laporan.keterangan, laporan.foto_lokasi, surat_tugas.tanggal, surat_tugas.an_tersangka,surat_tugas.jenis_kelamin,surat_tugas.tgl_lahir,surat_tugas.agama,surat_tugas.pendidikan_terakhir,surat_tugas.pekerjaan,surat_tugas.warganegara,surat_tugas.alamat FROM laporan_proses,surat_tugas,laporan WHERE laporan_proses.unit = '$unit' AND laporan_proses.nomer_kasus = surat_tugas.nomer_kasus AND laporan_proses.nomer_kasus = laporan.nomer_kasus AND laporan_proses.status_laporan = 'sudah selesai' AND laporan.proses_laporan = 'selesai' AND surat_tugas.status_tersangka = 'sudah tertangkap' OR surat_tugas.status_tersangka = 'tertangkap'");
             foreach ($query as $q => $value) {
             ?>
                 <div class="col-md-6">
                     <div class="card">
-                        <iframe
-                            width="100%"
-                            height="200"
-                            frameborder="0" style="border:0"
-                            src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBYHSJymZYnSTdi3vH4Mh_H7b-jAgBOCag&center=<?= $value['latitude'];?>,<?=  $value['longtitude'];?>&zoom=18&maptype=satellite" allowfullscreen>
-                            </iframe>
+
+                            <strong class="m-4">LOKASI AWAL</strong>
                             <iframe
                             width="100%"
                             height="200"
@@ -97,19 +77,9 @@ if(isset($_POST['lanjutkan'])){
                             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBYHSJymZYnSTdi3vH4Mh_H7b-jAgBOCag
                                 &q=<?= $value['latitude'];?>,<?=  $value['longtitude'];?>" allowfullscreen>
                             </iframe>
-                        <div class="card-body">
-
-                        <?php 
-                        if($value['proses_laporan']==""){?>
-                        <span class="badge badge-info">Menunggu Keberlanjutan Laporan</span><br><br>
-                        <?php }elseif($value['proses_laporan']=="tidak lanjut"){ ?>
-                        <span class="badge badge-danger">Laporan Tidak di lanjutkan</span><br><br>
-                        <?php }elseif($value['proses_laporan']=="proses" || $value['proses_laporan']=="diproses"){ ?>
-                        <span class="badge badge-primary">Laporan di lanjutkan</span><br><br>
-                        <?php }elseif($value['proses_laporan']=="selesai"){ ?>
-                        <span class="badge badge-success">Laporan telah selesai</span><br><br>
-                        <?php } ?>
-                            <br><br><i class="menu-icon fa fa-map-marker"></i> <?= $value['unit'];?>
+                        
+                           <div class="card-body">
+                             <br><br><i class="menu-icon fa fa-map-marker"></i> <?= $value['unit'];?>
                                 <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Nomer Kasus : <?= $value['nomer_kasus']; ?></li>
                                 <li class="list-group-item">Ditugaskan : <?= $value['nama_team']; ?></li>
@@ -117,20 +87,7 @@ if(isset($_POST['lanjutkan'])){
                                 <li class="list-group-item"><?= $value['tanggal']; ?></li>
                                 </ul>
 
-                                <?php if($value['proses_laporan']=="proses" || $value['proses_laporan']=="diproses"){}
-                                elseif ($value['proses_laporan']=="tidak lanjut") {}
-                                elseif ($value['proses_laporan']=="selesai"){}
-                                else{?>
-                                <form method="post" action="">
-                                <input type="hidden" name="nomer" value="<?= $value['nomer_kasus'];?>">
-                                <input type="hidden" name="team" value="<?= $value['nama_team'];?>">
-                                <button type="submit" class="btn btn-danger mt-4" name="hentikan">Hentikan Laporan</button>
-                                <a href="cetak/penangkapan.php?_hash=<?=base64_encode($value['id']); ?>" class="text-white"><button type="submit" class="btn btn-primary mt-4" name="lanjutkan">Lanjutkan Proses Laporan</button></a>
-                                <br><br>
-                                </form>
-                                <?php } ?>
-
-                            <div class="card-footer">
+                                <div class="card-footer">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#foto<?= $value['id'];?>">
                                 Foto Lokasi
                                 </button>
@@ -164,9 +121,8 @@ if(isset($_POST['lanjutkan'])){
                                 </div>
                                 </div>
 
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="view<?= $value['id'];?>" tabindex="-1" aria-labelledby="<?= $value['id'];?>" aria-hidden="true">
+                                 <!-- Modal -->
+                                 <div class="modal fade" id="view<?= $value['id'];?>" tabindex="-1" aria-labelledby="<?= $value['id'];?>" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -226,6 +182,134 @@ if(isset($_POST['lanjutkan'])){
                                     </div>
                                 </div>
                                 </div>
+                            </div>
+
+                            <strong class="m-4">LOKASI PROSES</strong>
+                            <iframe
+                            width="100%"
+                            height="200"
+                            frameborder="0" style="border:0"
+                            src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBYHSJymZYnSTdi3vH4Mh_H7b-jAgBOCag
+                                 &origin=<?= $value['latitude'];?>,<?=  $value['longtitude'];?>&destination=<?= $value['latitude_proses'];?>,<?=  $value['longtitude_proses'];?>&avoid=tolls|highways" allowfullscreen>
+                            </iframe>
+                        <div class="card-body">
+                        <?php 
+                        if($value['status_laporan']=="sudah selesai"){?>
+                        <span class="badge badge-success">Laporan telah selesai</span><br><br>
+                        <?php }else{}?>
+
+                        <br><br><i class="menu-icon fa fa-map-marker"></i> <?= $value['unit'];?>
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Nomer Kasus : <?= $value['nomer_kasus']; ?></li>
+                                <li class="list-group-item">Ditugaskan : <?= $value['nama_team']; ?></li>
+                                <li class="list-group-item">Keterangan : <?= $value['keterangan_proses']; ?></li>
+                                <li class="list-group-item"><?= $value['tanggal_proses']; ?></li>
+                                </ul>
+                            
+
+                                <?php if($value['status_laporan']=="sudah selesai"){}else{?>
+                                <br>
+                                <form method="post" action="">
+                                    <input type="hidden" name="nomer" value="<?= $value['nomer_kasus']; ?>">
+                                    <button type="submit" name="selesai" class="btn btn-primary mb-4">Tugas Selesai</button>
+                                </form>
+                                <?php } ?>
+
+                                <div class="card-footer">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fotoproses<?= $value['id'];?>">
+                                Foto Lokasi
+                                </button>
+
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#viewproses<?= $value['id'];?>">
+                                Street View
+                                </button>
+
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailproses<?= $value['id'];?>">
+                                Detail
+                                </button>
+                            </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="fotoproses<?= $value['id'];?>" tabindex="-1" aria-labelledby="<?= $value['id'];?>" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="<?= $value['id'];?>">Foto Lokasi</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="../../../image/<?= $value['foto_lokasi_proses'];?>" style="width:100%;height:200px">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                 <!-- Modal -->
+                                 <div class="modal fade" id="viewproses<?= $value['id'];?>" tabindex="-1" aria-labelledby="<?= $value['id'];?>" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="<?= $value['id'];?>">Street View</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <iframe
+                                    width="100%"
+                                    height="200"
+                                    frameborder="0" style="border:0"
+                                    src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyBYHSJymZYnSTdi3vH4Mh_H7b-jAgBOCag
+                                    &location=<?= $value['latitude_proses'];?>,<?=  $value['longtitude_proses'];?>&heading=210&pitch=10&fov=35" allowfullscreen>
+                                    </iframe>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="detailproses<?= $value['id'];?>" tabindex="-1" aria-labelledby="<?= $value['id'];?>" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="<?= $value['id'];?>">Detail Laporan Proses</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <strong>Alamat Tersangka</strong>
+                                    <iframe
+                                    width="100%"
+                                    height="200"
+                                    frameborder="0" style="border:0"
+                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBYHSJymZYnSTdi3vH4Mh_H7b-jAgBOCag
+                                        &q=<?= str_replace('','+',$value['alamat']);?>" allowfullscreen>
+                                    </iframe>
+                                    <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Nama Tersangka : <?= $value['an_tersangka']; ?></li>
+                                    <li class="list-group-item">Jenis Kelamin : <?= $value['jenis_kelamin']; ?></li>
+                                    <li class="list-group-item">Pendidikan Terakhir : <?= $value['pendidikan_terakhir']; ?></li>
+                                    <li class="list-group-item">Agama : <?= $value['agama']; ?></li>
+                                    <li class="list-group-item">Pekerjaan : <?= $value['pekerjaan']; ?></li>
+                                    <li class="list-group-item">Warganegara : <?= $value['warganegara']; ?></li>
+                                    <li class="list-group-item">Tanggal Penugasan : <?= $value['tanggal']; ?></li>
+                                    </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
                                 
                         </div>
                     </div>
@@ -249,21 +333,7 @@ if(isset($_POST['lanjutkan'])){
         <!-- /.site-footer -->
     </div>
     <!-- /#right-panel -->
-    <script>
-var x = document.getElementById("ltd");
-var y = document.getElementById("lty");
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } 
-}
-
-function showPosition(position) {
-  x.value = position.coords.latitude;
-  y.value = position.coords.longitude;
-}
-</script>
          <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>

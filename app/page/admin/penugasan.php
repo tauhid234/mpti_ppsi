@@ -43,6 +43,7 @@ if(isset($_POST["export"])){
 
         mysqli_query($conn,"UPDATE team SET status_team = 'sedang_penyelidikan' WHERE unit = '$unit' AND nama_team = '$tim'");
         $alert = "<script>swal('Sukses','Data Penugasan berhasil dibuat','success')</script>";
+        header("Location:cetak/penugasan.php");
         }
     }
 }

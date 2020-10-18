@@ -59,7 +59,7 @@ $team = $_SESSION["nama_team"];
                 $map = mysqli_query($conn,"SELECT alamat FROM surat_tugas WHERE polsek = '$unit' AND nama_team = '$team'");
                 $data = mysqli_fetch_array($map);
 
-                $queryCek = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND nama_team = '$team'");
+                $queryCek = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND nama_team = '$team' AND status_tersangka = 'belum tertangkap'");
                 $cekrow = mysqli_num_rows($queryCek);
                 if($cekrow==1){
                 ?>

@@ -25,7 +25,7 @@ if(isset($_POST["submit"])){
 
 
     if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit=="" || $pangkat=="" || $tim=="" || $pass==""){
-        $alert = "<script>swal('Gagal', 'NRP atau password Anda salah', 'error');</script>";
+        $alert = "<script>swal('Peringatan','Field masih ada yang belum di isi','warning');</script>";
     }else{
         $timeday = gettimeofday();
         $getnrp = $timeday;
