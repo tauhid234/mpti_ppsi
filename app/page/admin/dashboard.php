@@ -104,6 +104,7 @@ $unit = $_SESSION["unit"];
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-body">
+                                <strong class="card-title">Laporan awal penugasan</strong>
                                     <div id="map" style="height: 400px;"></div>
                                 </div>
                             </div>
@@ -180,7 +181,7 @@ $unit = $_SESSION["unit"];
       function initMap() {
         map = new google.maps.Map(
             document.getElementById('map'),
-            {center: new google.maps.LatLng(-7.090910999999999, 107.668887), zoom: 16});
+            {center: new google.maps.LatLng(-7.090910999999999, 107.668887), zoom: 6, mapTypeId: google.maps.MapTypeId.ROADMAP});
 
             const contentString = "<h1>Hello word</h1>";
 
@@ -200,31 +201,76 @@ $unit = $_SESSION["unit"];
         };
 
 
+        var infowindow = new google.maps.InfoWindow(), marker,i;
+
+        var markers = [
+            <?php 
+              $datamaps = mysqli_query($conn,"SELECT laporan.*, surat_tugas.* FROM laporan,surat_tugas WHERE laporan.unit = '$unit' AND laporan.nomer_kasus = surat_tugas.nomer_kasus");
+              foreach ($datamaps as $key => $value) {
+                  $text = ' " <strong>FOTO LOKASI</strong><br><br><img src=http://localhost/resnarkoba/image/'.$value["foto_lokasi"].' width=150 height=150><br><br><br>Tanggal Penugasan : '.$value['tanggal'].' <br><strong>Laporan Nomer Kasus : '. $value["nomer_kasus"] .'</strong><br><br>Nama tersangka : '.$value["an_tersangka"]. '<br>Jenis Kelamin : '.$value['jenis_kelamin'].' <br>Agama : '.$value['agama'].' <br>Pendidikan Terakhir : '.$value['pendidikan_terakhir'].' <br>Pekerjaan : '.$value['pekerjaan'].' <br>Warganegara : '.$value['warganegara'].' <br>Keterangan : '. $value["keterangan"] .' " ';
+                  echo '['. $text . ',' .$value['latitude']. ',' .$value['longtitude']. '],';
+              }
+              ?>
+    //   ['Taman Nasional Gunung Gede Pangrango', -6.777797700000000000 , 106.948689100000020000],
+    //   ['Gunung Papandayan', -7.319999999999999000, 107.730000000000020000],
+    //   ['Gunung Cikuray', -7.3225, 107.86000000000001],
+    //   ['Gunung Bromo', -7.942493600000000000, 112.953012199999990000],
+    //   ['Gunung Semeru', -8.1077172, 112.92240749999996],
+    //   ['Gunung Merapi', -7.540717500000000000, 110.445724100000000000],
+    //   ['Gunung Merbabu', -7.455000000000001000, 110.440000000000050000],
+    //   ['Gunung Prau', -7.1869444, 109.92277779999995]
+    ];
+
 
         var features = [
           {
             position: new google.maps.LatLng(-7.090910999999999, 107.668887),
             type: 'intel',
-            title : "Tester"
+            title : "Tester",
+            content : "tester"
           },
         ];
 
-        const infowindow = new google.maps.InfoWindow({
-          content: contentString,
-        });
+        // const infowindow = new google.maps.InfoWindow({
+        //   content: contentString,
+        // });
 
         // Create markers.
-        for (var i = 0; i < features.length; i++) {
+//         for (var i = 0; i < features.length; i++) {
+//           var marker = new google.maps.Marker({
+//             position: features[i].position,
+//             icon: icons[features[i].type].icon,
+//             map: map,
+//             title: "tes"
+//           });
+
+          
+//         marker.addListener("click", () => {
+//         infowindow.setContent(features[i].content);
+//         infowindow.open(map, marker);
+        
+//   });
+//         }
+
+
+
+
+for (var i = 0; i < markers.length; i++) {
           var marker = new google.maps.Marker({
-            position: features[i].position,
-            icon: icons[features[i].type].icon,
+            position: new google.maps.LatLng(markers[i][1], markers[i][2]),
             map: map,
+            icon: "http://localhost/resnarkoba/asset/icon/police_intel.png",
             title: "tes"
           });
-        };
-        marker.addListener("click", () => {
-    infowindow.open(map, marker);
-  });
+
+          
+          google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(markers[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+        }
       }
 </script>
 

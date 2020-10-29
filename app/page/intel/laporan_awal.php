@@ -61,7 +61,7 @@ $alert = "";
                     <?php 
                     $queryCek = mysqli_query($conn,"SELECT * FROM laporan WHERE nama_team = '$team' AND unit = '$unit' AND proses_laporan = ''");
                     $cekrow = mysqli_num_rows($queryCek);
-                    if($cekrow==1){ ?>
+                    if($cekrow==1 || $cekrow==0){ ?>
                     <p><a href="input_laporan_awal.php" class="btn btn-primary">Input laporan awal</a></p>
                     <?php }else{} ?>
                     <h5 class="mb-4">Laporan Awal</h5>
