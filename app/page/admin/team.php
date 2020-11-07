@@ -87,52 +87,142 @@ $unit = $_SESSION["unit"];
                     <div class="col-md-12">
                             <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="team1" role="tabpanel" aria-labelledby="team1-tab">
-                                <ul class="list-group list-group-flush">
+                            <table class="table table-striped">
+                                        <tr>
+                                            <th>NRP</th>
+                                            <th>Nama</th>
+                                            <th>Pangkat</th>
+                                            <th>Jabatan</th>
+                                            <th>Email</th>
+                                            <th>Alamat</th>
+                                        </tr>
+                                        <tr>
                                     <?php $data = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Eradicate Drugs'");
                                     while($value = mysqli_fetch_array($data)){ ?>
-                                    <li class="list-group-item"><a href="detail_anggota_team.php?_hash=<?= base64_encode($value['nama_anggota']);?>"><?= $value['nama_anggota'];?></a></li>
+                                           <td><?= $value['nrp']; ?></td>
+                                            <td><?= strtoupper($value['nama']); ?></td>
+                                            <td><?= $value['pangkat']; ?></td>
+                                            <td><?= $value['jabatan']; ?></td>
+                                            <td><?= $value['email']; ?></td>
+                                            <td><?= $value['alamat']; ?></td>
                                     <?php } ?>
-                                </ul>
+                                    </tr>
+                                </table>
                             </div>
                             <div class="tab-pane fade show" id="team2" role="tabpanel" aria-labelledby="team2-tab">
-                                <ul class="list-group list-group-flush">
-                                    <?php $data2 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Knights Prime of Power'");
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>NRP</th>
+                                            <th>Nama</th>
+                                            <th>Pangkat</th>
+                                            <th>Jabatan</th>
+                                            <th>Email</th>
+                                            <th>Alamat</th>
+                                        </tr>
+                                        <tr>
+                                    <?php $data2 = mysqli_query($conn,"SELECT * FROM user WHERE unit = '$unit' AND nama_team = 'Knights Prime of Power'");
                                     while($value2 = mysqli_fetch_array($data2)){ ?>
-                                    <li class="list-group-item"><a href="detail_anggota_team.php?_hash=<?= base64_encode($value2['nama_anggota']);?>"><?= $value2['nama_anggota'];?></a></li>
+                                            <td><?= $value2['nrp']; ?></td>
+                                            <td><?= strtoupper($value2['nama']); ?></td>
+                                            <td><?= $value2['pangkat']; ?></td>
+                                            <td><?= $value2['jabatan']; ?></td>
+                                            <td><?= $value2['email']; ?></td>
+                                            <td><?= $value2['alamat']; ?></td>
                                     <?php } ?>
-                                </ul>
+                                        </tr>
+                                    </table>
                             </div>
                             <div class="tab-pane fade show" id="team3" role="tabpanel" aria-labelledby="team3-tab">
-                                <ul class="list-group list-group-flush">
-                                    <?php $data3 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Eagle Eye Knights'");
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>NRP</th>
+                                            <th>Nama</th>
+                                            <th>Pangkat</th>
+                                            <th>Jabatan</th>
+                                            <th>Email</th>
+                                            <th>Alamat</th>
+                                        </tr>
+                                        <tr>
+                                        <?php $data3 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Eagle Eye Knights'");
                                     while($value3 = mysqli_fetch_array($data3)){ ?>
-                                    <li class="list-group-item"><a href="detail_anggota_team.php?_hash=<?= base64_encode($value3['nama_anggota']);?>"><?= $value3['nama_anggota'];?></a></li>
-                                    <?php } ?>
-                                </ul>
+                                          <td><?= $value3['nrp']; ?></td>
+                                            <td><?= strtoupper($value3['nama']); ?></td>
+                                            <td><?= $value3['pangkat']; ?></td>
+                                            <td><?= $value3['jabatan']; ?></td>
+                                            <td><?= $value3['email']; ?></td>
+                                            <td><?= $value3['alamat']; ?></td>
+                                   <?php } ?>
+                                        </tr>
+                                    </table>
                             </div>
                             <div class="tab-pane fade show" id="team4" role="tabpanel" aria-labelledby="team4-tab">
-                                <ul class="list-group list-group-flush">
-                                    <?php $data4 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Valkyrie Light'");
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>NRP</th>
+                                            <th>Nama</th>
+                                            <th>Pangkat</th>
+                                            <th>Jabatan</th>
+                                            <th>Email</th>
+                                            <th>Alamat</th>
+                                        </tr>
+                                        <tr>
+                                        <?php $data4 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Valkyrie Light'");
                                     while($value4 = mysqli_fetch_array($data4)){ ?>
-                                    <li class="list-group-item"><a href="detail_anggota_team.php?_hash=<?= base64_encode($value4['nama_anggota']);?>"><?= $value4['nama_anggota'];?></a></li>
-                                    <?php } ?>
-                                </ul>
+                                        <td><?= $value4['nrp']; ?></td>
+                                            <td><?= strtoupper($value4['nama']); ?></td>
+                                            <td><?= $value4['pangkat']; ?></td>
+                                            <td><?= $value4['jabatan']; ?></td>
+                                            <td><?= $value4['email']; ?></td>
+                                            <td><?= $value4['alamat']; ?></td>
+                                  <?php } ?>
+                                        </tr>
+                                    </table>
                             </div>
                             <div class="tab-pane fade show" id="team5" role="tabpanel" aria-labelledby="team5-tab">
-                                <ul class="list-group list-group-flush">
-                                    <?php $data5 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Wild Crime'");
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>NRP</th>
+                                            <th>Nama</th>
+                                            <th>Pangkat</th>
+                                            <th>Jabatan</th>
+                                            <th>Email</th>
+                                            <th>Alamat</th>
+                                        </tr>
+                                        <tr>
+                                        <?php $data5 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Wild Crime'");
                                     while($value5 = mysqli_fetch_array($data5)){ ?>
-                                    <li class="list-group-item"><a href="detail_anggota_team.php?_hash=<?= base64_encode($value5['nama_anggota']);?>"><?= $value5['nama_anggota'];?></a></li>
-                                    <?php } ?>
-                                </ul>
+                                        <td><?= $value5['nrp']; ?></td>
+                                            <td><?= strtoupper($value5['nama']); ?></td>
+                                            <td><?= $value5['pangkat']; ?></td>
+                                            <td><?= $value5['jabatan']; ?></td>
+                                            <td><?= $value5['email']; ?></td>
+                                            <td><?= $value5['alamat']; ?></td>
+                                  <?php } ?>
+                                        </tr>
+                                    </table>
                             </div>
                             <div class="tab-pane fade show" id="team6" role="tabpanel" aria-labelledby="team6-tab">
-                                <ul class="list-group list-group-flush">
-                                    <?php $data6 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Top Thunder Squad'");
+                            <table class="table table-striped">
+                                        <tr>
+                                            <th>NRP</th>
+                                            <th>Nama</th>
+                                            <th>Pangkat</th>
+                                            <th>Jabatan</th>
+                                            <th>Email</th>
+                                            <th>Alamat</th>
+                                        </tr>
+                                        <tr>
+                                        <?php $data6 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Top Thunder Squad'");
                                     while($value6 = mysqli_fetch_array($data6)){ ?>
-                                    <li class="list-group-item"><a href="detail_anggota_team.php?_hash=<?= base64_encode($value2['nama_anggota']);?>"><?= $value6['nama_anggota'];?></a></li>
-                                    <?php } ?>
-                                </ul>
+                                        <td><?= $value6['nrp']; ?></td>
+                                            <td><?= strtoupper($value6['nama']); ?></td>
+                                            <td><?= $value6['pangkat']; ?></td>
+                                            <td><?= $value6['jabatan']; ?></td>
+                                            <td><?= $value6['email']; ?></td>
+                                            <td><?= $value6['alamat']; ?></td>
+                                  <?php } ?>
+                                        </tr>
+                                    </table>
                             </div>
                         </div>
                     </div>

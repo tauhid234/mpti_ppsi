@@ -35,9 +35,21 @@ if(isset($_POST["submit"])){
         else{
             move_uploaded_file($file_tmp,'../../../image/'.$foto);
             $query = mysqli_query($conn,"UPDATE user SET nama='$nama', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
-            tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres' WHERE nrp = '$nrp'");
+            tinggi_badan='$tb', email='$email', no_hp='$hp' WHERE nrp = '$nrp'");
             $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
         }
+    }else{
+        if($foto==""){
+            $query = mysqli_query($conn,"UPDATE user SET nama='$nama', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
+                    tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres' WHERE nrp = '$nrp'");
+            $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
+            }
+            else{
+                move_uploaded_file($file_tmp,'../../../image/'.$foto);
+                $query = mysqli_query($conn,"UPDATE user SET nama='$nama', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
+                tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres' WHERE nrp = '$nrp'");
+                $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
+            }
     }
 }
 }

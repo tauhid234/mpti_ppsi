@@ -21,8 +21,6 @@ if(isset($_POST["submit"])){
     $email = $_POST["email"];
     $hp = $_POST["handphone"];
     $addres = $_POST["address"];
-    $unit = $_POST["unit"];
-    $pangkat = $_POST["pangkat"];
 
     
     $foto = $_FILES['file']['name'];
@@ -30,17 +28,28 @@ if(isset($_POST["submit"])){
 
     if($nama==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""){
         $alert = "<script>swal('Gagal', 'Field masih ada yang belum di isi', 'error');</script>";
-    }elseif ($unit==""||$addres=="") {
+    }elseif ($addres=="") {
         if($foto==""){
         $query = mysqli_query($conn,"UPDATE user SET nama='$nama', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
                 tinggi_badan='$tb', email='$email', no_hp='$hp' WHERE nrp = '$nrp'");
         $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
         }else{
             move_uploaded_file($file_tmp,'../../../image/'.$foto);
-            $query = mysqli_query($conn,"UPDATE user SET nama='$nama', pangkat='$pangkat', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
-            tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres', unit='$unit' WHERE nrp = '$nrp'");
-            $alert = "<script>swal('Success', 'Data foto berhasil diupdate', 'success');</script>";
+            $query = mysqli_query($conn,"UPDATE user SET nama='$nama', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
+            tinggi_badan='$tb', email='$email', no_hp='$hp' WHERE nrp = '$nrp'");
+            $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
         }
+    }else{
+        if($foto==""){
+            $query = mysqli_query($conn,"UPDATE user SET nama='$nama', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
+                    tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres' WHERE nrp = '$nrp'");
+            $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
+            }else{
+                move_uploaded_file($file_tmp,'../../../image/'.$foto);
+                $query = mysqli_query($conn,"UPDATE user SET nama='$nama', foto='$foto', tgl_lahir='$tgl_lahir', umur='$umur', berat_badan='$bb',
+                tinggi_badan='$tb', email='$email', no_hp='$hp', alamat='$addres' WHERE nrp = '$nrp'");
+                $alert = "<script>swal('Success', 'Data berhasil diupdate', 'success');</script>";
+            }
     }
     }
     
@@ -141,87 +150,26 @@ if(isset($_POST["submit"])){
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="berat">Berat Badan</label>
                                 <input type="number" class="form-control" min="0" max="100" id="berat" name="berat" value="<?= $data['berat_badan'];?>">
                                 <div id="invalid-berat" style="color:red;"></div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="tinggi">Tinggi Badan</label>
                                 <input type="number" class="form-control" id="tinggi" name="tinggi" value="<?= $data['tinggi_badan'];?>">
                                 <div id="invalid-tinggi" style="color:red;"></div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="tinggi">Pangkat</label>
-                                <select class="form-control" name="pangkat" id="pangkat">
-                                    <option value="">-</option>
-                                    <option value="BRIPDA">BRIPDA</option>
-                                    <option value="BRIPKA">BRIPKA</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="form-row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                 <label for="inputEmail4">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" value="<?= $data['email'];?>">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                 <label for="inputEmail4">No.HP</label>
                                 <input type="number" class="form-control" id="handphone" name="handphone" value="<?= $data['no_hp'];?>">
                                 </div>
-                            <div class="form-group col-md-4">
-                            <label for="inputEmail4">Unit Polsek</label>
-                            <select name="unit" class="form-control">
-                                <option value="">-</option>
-                              <optgroup label="SUB Jakarta Selatan">
-                                <option value="Polsek Pancoran">Polsek Pancoran</option>
-                                <option value="Polsek Kebayoran Lama">Polsek Kebayoran Lama</option>
-                                <option value="Polsek Metro Setiabudi">Polsek Metro Setiabudi</option>
-                                <option value="Polsek Pesanggrahan">Polsek Pesanggrahan</option>
-                                <option value="Polsek Jagakarsa">Polsek Jagakarsa</option>
-                                <option value="Polsek Pasar Minggu">Polsek Pasar Minggu</option>
-                                <option value="Polsek Cengkareng">Polsek Cengkareng</option>
-                              <optgroup>
-                              <optgroup label="SUB Jakarta Utara">
-                                <option value="Polsek Tanjung Priok">Polsek Tanjung Priok</option>
-                                <option value="Polsek Penjaringan">Polsek Penjaringan</option>
-                                <option value="Polsek Kelapa Gading">Polsek Kelapa Gading</option>
-                                <option value="Polsek Metro Koja">Polsek Metro Koja</option>
-                                <option value="Polsek Cilincing">Polsek Cilincing</option>
-                                <option value="Polsek Pademangan">Polsek Pademangan</option>
-                                <option value="Polsek Kemayoran">Polsek Kemayoran</option>  
-                              </optgroup>
-                              <optgroup label="SUB Jakarta Timur">
-                                <option value="Polsek Matraman">Polsek Matraman</option>
-                                <option value="Polsek Jatinegara">Polsek Jatinegara</option>
-                                <option value="Polsek Cakung">Polsek Cakung</option>
-                                <option value="Polsek Kramat Jati">Polsek Kramat Jati</option>
-                                <option value="Polsek Duren Sawit">Polsek Duren Sawit</option>
-                                <option value="Polsek Cipayung">Polsek Cipayung</option>
-                                <option value="Polsek Ciracas">Polsek Ciracas</option>
-                                <option value="Polsek Pasar Rebo">Polsek Pasar Rebo</option>
-                                <option value="Polsek Makasar Pinang Ranti">Polsek Makasar Pinang Ranti</option>
-                                <option value="Polsek Kebon Sereh">Polsek Kebon Sereh</option>
-                                <option value="Polsek Johar Baru">Polsek Johar Baru</option>
-                              </optgroup>
-                              <optgroup label="SUB Jakarta Pusat">
-                                <option value="Polsek Sawah Besar">Polsek Sawah Besar</option>
-                                <option vlaue="Polsek Kemayoran">Polsek Kemayoran</option>
-                                <option value="Polsek Metro Tanah Abang">Polsek Metro Tanah Abang</option>
-                                <option value="Polsek Metro Gambir">Polsek Metro Gambir</option>
-                                <option value="Polsek Senen">Polsek Senen</option>
-                              </optgroup>
-                              <optgroup label="SUB Jakarta Barat">
-                                <option value="Polsek Kebon Jeruk">Polsek Kebon Jeruk</option>
-                                <option value="Polsek Tanjung Duren">Polsek Tanjung Duren</option>
-                                <option value="Polsek Palmerah">Polsek Palmerah</option>
-                                <option value="Polsek Tambora">Polsek Tambora</option>
-                                <option value="Polsek Kalideres">Polsek Kalideres</option>
-                                <option value="Polsek Taman Sari">Polsek Taman Sari</option>
-                                <option value="Polsek Kembangan">Polsek Kembangan</option>
-                              </optgroup>
-                            </select>
-                            </div>
                         </div>
                         <div class="form-group">
                             <label for="inputAddress">Address</label>

@@ -20,6 +20,7 @@ if(isset($_POST["submit"])){
     $addres = $_POST["address"];
     $unit = $_POST["unit"];
     $pangkat = $_POST["pangkat"];
+    $jabatan = $_POST["jabatan"];
     $pass = $_POST["password"];
     $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -27,14 +28,14 @@ if(isset($_POST["submit"])){
     $file_tmp = $_FILES['file']['tmp_name'];
 
 
-    if($nama==""||$foto==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit==""||$pass=""||$tim=""){
+    if($nama==""||$foto==""||$tgl_lahir==""||$umur==""||$bb==""||$tb==""||$email==""||$hp==""||$addres==""||$unit==""||$pass=""||$tim=""||$jabatan==""){
         $alert = "<script>swal('Peringatan','Field masih ada yang belum di isi','warning');</script>";
     }else{
         $timeday = gettimeofday();
         $getnrp = $timeday;
         move_uploaded_file($file_tmp,'../../../image/'.$foto);
-        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
-                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','admin')");
+        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,jabatan,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
+                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$jabatan','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','admin')");
         $alert = "<script>swal('Success','Data berhasil di simpan','success');</script>";
     }
 
@@ -108,21 +109,21 @@ if(isset($_POST["submit"])){
 
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                        <label for="nama">Foto</label>
+                        <label for="file">Foto</label>
                             <input type="file" class="form-control" id="file" name="file" onchange="return fileValidation()"/>
                         </div>
                     </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                            <label for="nama">Nama Lengkap</label>
+                            <label for="name">Nama Lengkap</label>
                             <input type="text" class="form-control" id="name" name="name">
                             </div>
                             <div class="form-group col-md-4">
-                            <label for="nama">Tanggal Lahir</label>
+                            <label for="tgl_lahir">Tanggal Lahir</label>
                             <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir">
                              </div>
                             <div class="form-group col-md-4">
-                            <label for="nama">Umur</label>
+                            <label for="umur">Umur</label>
                             <input type="text" readonly class="form-control" id="umur" name="umur" onclick="cekumur();">                            
                             </div>
                         </div>
@@ -138,25 +139,29 @@ if(isset($_POST["submit"])){
                                 <div id="invalid-tinggi" style="color:red;"></div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="tinggi">Pangkat</label>
+                                <label for="pangkat">Pangkat</label>
                                 <select class="form-control" name="pangkat" id="pangkat">
                                     <option value="">-</option>
                                     <option value="BRIPDA">BRIPDA</option>
                                     <option value="BRIPKA">BRIPKA</option>
+                                    <option value="AIPTU">AIPTU</option>
+                                    <option value="AIPDA">AIPDA</option>
+                                    <option value="AKBP">BRIGPOL</option>
+                                    <option value="BRIPTU">BRIPTU</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                            <label for="inputEmail4">Email</label>
+                            <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email">
                             </div>
                             <div class="form-group col-md-4">
-                            <label for="inputEmail4">No.HP</label>
+                            <label for="handphone">No.HP</label>
                             <input type="number" class="form-control" id="handphone" name="handphone">
                             </div>
                             <div class="form-group col-md-4">
-                            <label for="inputEmail4">Unit Polsek</label>
+                            <label for="unit">Unit Polsek</label>
                             <select name="unit" class="form-control">
                                 <option value="">-</option>
                               <optgroup label="SUB Jakarta Selatan">
@@ -207,6 +212,20 @@ if(isset($_POST["submit"])){
                                 <option value="Polsek Kembangan">Polsek Kembangan</option>
                               </optgroup>
                             </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="jabatan">Jabatan</label>
+                                <select class="form-control" name="jabatan" id="jabatan">
+                                    <option value="">-</option>
+                                    <option value="KOMBES">KOMBES</option>
+                                    <option value="AKBP">AKBP</option>
+                                    <option value="KOMPOL">KOMPOL</option>
+                                    <option value="AKP">AKP</option>
+                                    <option value="IPTU">IPTU</option>
+                                    <option value="IPDA">IPDA</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">

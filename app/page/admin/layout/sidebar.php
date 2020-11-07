@@ -1,24 +1,24 @@
-<aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm navbar-default">
+<aside id="left-panel" class="left-panel" style="background-color:#273c75;">
+        <nav class="navbar navbar-expand-sm navbar-default" style="background-color:#273c75;">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="">
-                        <a href="dashboard.php"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                        <a href="dashboard.php" class="text-white"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                     </li>
-                    <li class="menu-title">Data Anggota</li>
+                    <li class="menu-title text-white">Data Anggota</li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-info"></i>INTEL</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-users"></i><a href="anggota.php">Anggota</a></li>
-                            <li><i class="menu-icon fa fa-user"></i><a href="new_anggota.php">Anggota Baru</a></li>
+                        <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-info"></i>INTEL</a>
+                        <ul class="sub-menu children dropdown-menu" style="background-color:#273c75;">
+                            <li><i class="menu-icon fa fa-users"></i><a href="anggota.php" style="color:#00a8ff;">Anggota</a></li>
+                            <li><i class="menu-icon fa fa-user"></i><a href="new_anggota.php" style="color:#00a8ff;">Anggota Baru</a></li>
                         </ul>
                         <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-group"></i>ADMIN</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-users"></i><a href="admin_anggota.php">Admin Anggota</a></li>
-                            <li><i class="menu-icon fa fa-user"></i><a href="new_admin.php">Admin Anggota Baru</a></li>
+                        <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-group"></i>ADMIN</a>
+                        <ul class="sub-menu children dropdown-menu" style="background-color:#273c75;">
+                            <li><i class="menu-icon fa fa-users"></i><a href="admin_anggota.php" style="color:#00a8ff;">Admin Anggota</a></li>
+                            <li><i class="menu-icon fa fa-user"></i><a href="new_admin.php" style="color:#00a8ff;">Admin Anggota Baru</a></li>
                         </ul>
-                        <li><a href="team.php"><i class="menu-icon fa fa-sitemap"></i> Team</a></li>
+                        <li><a href="team.php" class="text-white"><i class="menu-icon fa fa-sitemap"></i> Team</a></li>
                     </li>
                     </li>
                     <!--li class="menu-item-has-children dropdown">
@@ -29,32 +29,32 @@
                         </ul>
                     </li-->
                     
-                    <li class="menu-title">Data Laporan</li>
+                    <li class="menu-title text-white">Data Laporan</li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-clipboard"></i>Laporan</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-file-text-o"></i><a href="laporan_awal.php">Laporan Awal</a></li>
-                            <li><i class="menu-icon fa fa-spinner"></i><a href="laporan_proses.php">Laporan Proses</a></li>
-                            <li><i class="menu-icon fa fa-check-square-o"></i><a href="laporan_akhir.php">Laporan Akhir</a></li>
+                        <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-clipboard"></i>Laporan</a>
+                        <ul class="sub-menu children dropdown-menu" style="background-color:#273c75;">
+                            <li><i class="menu-icon fa fa-file-text-o"></i><a href="laporan_awal.php" style="color:#00a8ff;">Laporan Awal</a></li>
+                            <li><i class="menu-icon fa fa-spinner"></i><a href="laporan_proses.php" style="color:#00a8ff;">Laporan Proses</a></li>
+                            <li><i class="menu-icon fa fa-check-square-o"></i><a href="laporan_akhir.php" style="color:#00a8ff;">Laporan Akhir</a></li>
                         </ul>
                     </li>
 
-                    <li class="menu-title">Data Penugasan</li>
+                    <li class="menu-title text-white">Data Penugasan</li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-edit"></i>Penugasan</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-briefcase"></i><a href="penugasan.php">Penugasan Anggota</a></li>
-                            <li><i class="menu-icon fa fa-chain"></i><a href="instansi.php">Kerja Sama Instantsi</a></li>
+                        <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-edit"></i>Penugasan</a>
+                        <ul class="sub-menu children dropdown-menu" style="background-color:#273c75;">
+                            <li><i class="menu-icon fa fa-briefcase"></i><a href="penugasan.php" style="color:#00a8ff;">Penugasan Anggota</a></li>
+                            <li><i class="menu-icon fa fa-chain"></i><a href="instansi.php" style="color:#00a8ff;">Kerja Sama Instantsi</a></li>
                         </ul>
                     </li>
 
-                    <li class="menu-title">Data Tersangka</li>
-                        <li><a href="tersangka.php"><i class="menu-icon fa fa-book"></i> Tersangka</a></li>
-                        <li><a href="dpo.php" class="dropdown-toggle" aria-haspopup="true"><i class="menu-icon fa fa-exclamation-triangle"></i> Data Pencarian Orang (DPO)</a></li>
+                    <li class="menu-title text-white">Data Tersangka</li>
+                        <li><a href="tersangka.php" class="text-white"><i class="menu-icon fa fa-book"></i> Tersangka</a></li>
+                        <li><a href="dpo.php" class="text-white"><i class="menu-icon fa fa-exclamation-triangle"></i> Data Pencarian Orang (DPO)</a></li>
 
-                    <li class="menu-title">Data Statistik</li>
+                    <li class="menu-title text-white">Data Statistik</li>
                     <li class="menu-item-has-children dropdown">
-                    <li><a href="statistik.php"><i class="menu-icon fa fa-bar-chart-o"></i> Statistik</a></li>
+                    <li><a href="statistik.php" class="text-white"><i class="menu-icon fa fa-bar-chart-o"></i> Statistik</a></li>
                     </li>
                     
                 </ul>

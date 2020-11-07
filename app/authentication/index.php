@@ -65,30 +65,27 @@ if(isset($_POST["submit"])){
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 </head>
-<body class="bg-dark">
+<body>
 
     <div class="sufee-login d-flex align-content-center flex-wrap">
         <div class="container">
             <div class="login-content">
                 <?= $alert; ?>
-                <div class="login-form">
+                <div class="login-form" style="background-color:#40739e; border-radius:10px; box-shadow: 5px 5px 15px black;">
                     <form method="post" action="">
+                    <div class="text-center">
+                        <img src="../../asset/logo.png" width="250" height="250">
+                    </div>
                         <div class="form-group">
-                            <label>NRP</label>
+                            <label class="text-white">NRP</label>
                             <input type="text" name="nrp" class="form-control <?=$isInvalid;?>" id="nrp" autocomplete="off">
                             
-                            <div class="invalid-feedback" id="invalid-feedback">
-                                Mohon isi NRP
-                            </div>
 
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
+                            <label class="text-white">Password</label>
                             <input type="password" name="password" class="form-control <?=$isInvalid;?>" id="password">
 
-                            <div class="invalid-feedback" id="invalid-feedback">
-                                Password belum di isi
-                            </div>
 
                         </div>
                         <button type="submit" name="submit" class="btn btn-info btn-flat m-b-30 m-t-30">MASUK</button>

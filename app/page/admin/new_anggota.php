@@ -19,6 +19,7 @@ if(isset($_POST["submit"])){
     $unit = $_POST["unit"];
     $tim = $_POST["team"];
     $pangkat = $_POST["pangkat"];
+    $jabatan = $_POST["jabatan"];
     $pass = $_POST["password"];
     $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -33,8 +34,8 @@ if(isset($_POST["submit"])){
         $file_tmp = $_FILES['file']['tmp_name'];
         move_uploaded_file($file_tmp,'../../../image/'.$foto);
         $queryTeam = mysqli_query($conn,"INSERT INTO team (id,nama_anggota,unit,nama_team) VALUES ('','$nama','$unit','$tim')");
-        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,nama_team,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
-                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$tim','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','intel')");
+        $query = mysqli_query($conn,"INSERT INTO user (nrp,password,nama,pangkat,jabatan,nama_team,foto,tgl_lahir,umur,berat_badan,tinggi_badan,email,no_hp,alamat,unit,status_user) 
+                             VALUES ('$getnrp[sec]','$hash_pass','$nama','$pangkat','$jabatan','$tim','$foto','$tgl_lahir','$umur','$bb','$tb','$email','$hp','$addres','$unit','intel')");
         $alert = "<script>swal('Sukses','Data berhasil tersimpan','success')</script>";
     }
 
@@ -144,6 +145,10 @@ if(isset($_POST["submit"])){
                                     <option value="">-</option>
                                     <option value="BRIPDA">BRIPDA</option>
                                     <option value="BRIPKA">BRIPKA</option>
+                                    <option value="AIPTU">AIPTU</option>
+                                    <option value="AIPDA">AIPDA</option>
+                                    <option value="AKBP">BRIGPOL</option>
+                                    <option value="BRIPTU">BRIPTU</option>
                                 </select>
                             </div>
                         </div>
@@ -222,6 +227,20 @@ if(isset($_POST["submit"])){
                                 <option value="Wild Crime">Wild Crime</option>
                                 <option value="Top Thunder Squad">Top Thunder Squad</option>
                             </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="jabatan">Jabatan</label>
+                                <select class="form-control" name="jabatan" id="jabatan">
+                                    <option value="">-</option>
+                                    <option value="KOMBES">KOMBES</option>
+                                    <option value="AKBP">AKBP</option>
+                                    <option value="KOMPOL">KOMPOL</option>
+                                    <option value="AKP">AKP</option>
+                                    <option value="IPTU">IPTU</option>
+                                    <option value="IPDA">IPDA</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">

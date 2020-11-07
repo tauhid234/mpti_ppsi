@@ -6,16 +6,16 @@ $team = $_SESSION["nama_team"];
 $user = mysqli_query($conn,"SELECT foto FROM user WHERE nrp = '$nrp'");
 $data = mysqli_fetch_array($user);
 ?>
-<header id="header" class="header">
-            <div class="top-left">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="dashboard.php"><img src="../../../asset/logo.png" alt="Logo" style="width:40px; height:40px; margin-right:20px;">SAT RESNARKOBA</a>
+<header id="header" class="header bg-primary">
+            <div class="top-left bg-primary">
+                <div class="navbar-header bg-primary">
+                    <a class="navbar-brand text-white" href="dashboard.php"><img src="../../../asset/logo.png" alt="Logo" style="width:40px; height:40px; margin-right:20px;">SAT RESNARKOBA</a>
                     <a class="navbar-brand hidden" href="./"><img src="../../../asset/logo.png" alt="Logo"></a>
-                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars text-white"></i></a>
                 </div>
             </div>
-            <div class="top-right">
-                <div class="header-menu">
+            <div class="top-right bg-primary">
+                <div class="header-menu bg-primary">
                     <div class="header-left">
                         
 
@@ -25,7 +25,7 @@ $data = mysqli_fetch_array($user);
                         $data_trs = mysqli_fetch_array($count); 
                         ?>
                         <div class="dropdown for-notification">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell"></i>
                                 <span class="count bg-danger"><?= $data_count; ?></span>
                             </button>

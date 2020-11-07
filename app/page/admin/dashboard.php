@@ -60,16 +60,19 @@ $unit = $_SESSION["unit"];
                 <!-- Widgets  -->
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="card">
+                        <div class="card bg-danger">
                             <div class="card-body">
+                            <?php 
+                    $count1 = mysqli_query($conn,"SELECT * FROM laporan_proses WHERE YEAR(tanggal_proses) = '2020' AND unit = '$unit' AND status_laporan = 'sudah selesai'");
+                    $data1 = mysqli_num_rows($count1);?>
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-1">
-                                        <i class="pe-7s-box"></i>
+                                    <div class="stat-icon dib flat-color-5">
+                                    <i class="pe-7s-browser"></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><span class="count">0</span></div>
-                                            <div class="stat-heading">Barang Bukti</div>
+                                            <div class="stat-text text-white"><span class="count"><?= $data1; ?></span></div>
+                                            <div class="stat-heading text-white">Jumlah Kasus</div>
                                         </div>
                                     </div>
                                 </div>
@@ -82,16 +85,16 @@ $unit = $_SESSION["unit"];
                     $data = mysqli_num_rows($count);?>
 
                     <div class="col-md-6">
-                        <div class="card">
+                        <div class="card bg-warning">
                             <div class="card-body">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-4">
+                                    <div class="stat-icon dib flat-color-2">
                                         <i class="pe-7s-users"></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><span class="count"><?= $data; ?></span></div>
-                                            <div class="stat-heading">Jumlah Napi</div>
+                                            <div class="stat-text text-white"><span class="count"><?= $data; ?></span></div>
+                                            <div class="stat-heading text-white">Jumlah Napi</div>
                                         </div>
                                     </div>
                                 </div>

@@ -28,7 +28,7 @@ if(isset($_POST["submit"])){
         $alert = "<script>swal('Gagal','Inputan field masih ada yang belum di isi','error')</script>";
     }else{
         move_uploaded_file($file,'../../../image/'.$foto);
-        mysqli_query($conn,"INSERT INTO laporan_proses (id,unit,nama_team,foto_lokasi_proses,latitude_proses,longtitude_proses,keterangan_proses,tanggal,status_laporan,nomer_kasus)
+        mysqli_query($conn,"INSERT INTO laporan_proses (id,unit,nama_team,foto_lokasi_proses,latitude_proses,longtitude_proses,keterangan_proses,tanggal_proses,status_laporan,nomer_kasus)
                     VALUES ('','$unit','$team','$foto','$lat','$lot','$ket','$tgl','sedang berjalan','$ks')");
         mysqli_query($conn,"UPDATE laporan SET proses_laporan = 'diproses' WHERE nama_team = '$team' AND unit = '$unit' AND nomer_kasus = '$ks'");
         $alert = "<script>swal('Sukses','Data laporan proses disimpan','success')</script>";

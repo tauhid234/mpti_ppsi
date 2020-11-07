@@ -68,9 +68,9 @@ $unit = $_SESSION["unit"];
             foreach ($query as $q => $value) {
             ?>
                 <div class="col-md-6">
-                    <div class="card" style="width: 100%;">
+                    <div class="card" style="width: 100%; background-color:#18dcff;">
                         <img class="card-img-top" src="../../../image/<?= $value['foto']; ?>" style="width:200px; height:200px; border-radius:250px; margin-left:10px; margin-top:10px;" alt="Card image cap">
-                        <div class="card-body">
+                        <div class="card-body bg-light">
                             <h5 class="card-title"><?= strtoupper($value['nama']);?><br><br><i class="menu-icon fa fa-map-marker"></i> <?= $value['unit'];?></h5>
                                 <ul class="list-group list-group-flush">
                                 <li class="list-group-item">NRP : <?= $value['nrp'];?></li>
