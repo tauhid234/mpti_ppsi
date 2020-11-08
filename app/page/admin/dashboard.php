@@ -1,8 +1,10 @@
 <?php
 session_start();
-$infoSession = "<script>toastr.success('Success', 'tes')</script>";
 if(!isset($_SESSION["nrp"])){
     header("location:../../authentication/index.php");
+}
+if($_SESSION["status_user"]!="admin"){
+    header("location:../intel/dashboard.php");
 }
 $unit = $_SESSION["unit"];
 ?>
@@ -54,7 +56,6 @@ $unit = $_SESSION["unit"];
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
-        <?= $infoSession; ?>
             <!-- Animated -->
             <div class="animated fadeIn">
                 <!-- Widgets  -->
@@ -134,7 +135,7 @@ $unit = $_SESSION["unit"];
                     <div class="card mb-3">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                            <img src="../../../image/mysterius.png" class="card-img" alt="foto tersangka">
+                            <img src="../../../image/<?= $value['foto_tersangka'];?>" class="card-img" alt="foto tersangka">
                             </div>
                             <div class="col-md-8">
                             <div class="card-body">
@@ -189,7 +190,7 @@ $unit = $_SESSION["unit"];
             const contentString = "<h1>Hello word</h1>";
 
         var iconBase =
-            '../../../asset/icon/';
+            '../../../../asset/icon/';
 
         var icons = {
           parking: {
@@ -210,7 +211,7 @@ $unit = $_SESSION["unit"];
             <?php 
               $datamaps = mysqli_query($conn,"SELECT laporan.*, surat_tugas.* FROM laporan,surat_tugas WHERE laporan.unit = '$unit' AND laporan.nomer_kasus = surat_tugas.nomer_kasus");
               foreach ($datamaps as $key => $value) {
-                  $text = ' " <strong>FOTO LOKASI</strong><br><br><img src=http://localhost/resnarkoba/image/'.$value["foto_lokasi"].' width=150 height=150><br><br><br>Tanggal Penugasan : '.$value['tanggal'].' <br><strong>Laporan Nomer Kasus : '. $value["nomer_kasus"] .'</strong><br><br>Nama tersangka : '.$value["an_tersangka"]. '<br>Jenis Kelamin : '.$value['jenis_kelamin'].' <br>Agama : '.$value['agama'].' <br>Pendidikan Terakhir : '.$value['pendidikan_terakhir'].' <br>Pekerjaan : '.$value['pekerjaan'].' <br>Warganegara : '.$value['warganegara'].' <br>Keterangan : '. $value["keterangan"] .' " ';
+                  $text = ' " <strong>FOTO LOKASI</strong><br><br><img src=http://localhost/resnarkoba/mpti_ppsi/image/'.$value["foto_lokasi"].' width=150 height=150><br><br><br>Tanggal Penugasan : '.$value['tanggal'].' <br><strong>Laporan Nomer Kasus : '. $value["nomer_kasus"] .'</strong><br><br>Nama tersangka : '.$value["an_tersangka"]. '<br>Jenis Kelamin : '.$value['jenis_kelamin'].' <br>Agama : '.$value['agama'].' <br>Pendidikan Terakhir : '.$value['pendidikan_terakhir'].' <br>Pekerjaan : '.$value['pekerjaan'].' <br>Warganegara : '.$value['warganegara'].' <br>Keterangan : '. $value["keterangan"] .' " ';
                   echo '['. $text . ',' .$value['latitude']. ',' .$value['longtitude']. '],';
               }
               ?>
@@ -262,7 +263,7 @@ for (var i = 0; i < markers.length; i++) {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(markers[i][1], markers[i][2]),
             map: map,
-            icon: "http://localhost/resnarkoba/asset/icon/police_intel.png",
+            icon: "http://localhost/resnarkoba/mpti_ppsi/asset/icon/police_intel.png",
             title: "tes"
           });
 

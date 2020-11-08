@@ -1,7 +1,7 @@
 <?php 
 include("../../../server/config.php");
 $nrp = $_SESSION["nrp"];
-$user = mysqli_query($conn,"SELECT foto FROM user WHERE nrp = '$nrp'");
+$user = mysqli_query($conn,"SELECT foto,status_user FROM user WHERE nrp = '$nrp'");
 $data = mysqli_fetch_array($user);
 ?>
 <header id="header" class="header bg-primary">
@@ -33,7 +33,7 @@ $data = mysqli_fetch_array($user);
                                     <?php foreach($count as $key => $value){ ?>
                                 <a class="dropdown-item media">
                                     <div class="message media-body">
-                                    <span class="photo media-left"><img alt="avatar" src="../../../image/mysterius.png"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="../../../image/<?= $value['foto_tersangka'];?>"></span>
                                         <span class="name float-left"><?= "Team ".$value["nama_team"]?> <br> sedang melakukan penyidikan terhadap tersangka <br><strong><?= strtoupper($value['an_tersangka']); ?></strong><br>
                                         <span class="badge badge-danger">Status <?= $value["status_tersangka"];?></span></span>
                                         </div>

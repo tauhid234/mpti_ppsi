@@ -2,7 +2,9 @@
 session_start();
 require('../../../fpdf/fpdf.php');
 require('../../../server/config.php');
-
+if($_SESSION["status_user"]!="admin"){
+    header("location:../intel/dashboard.php");
+}
 $polsek = $_SESSION["unit"];
 if(isset($_POST["export"])){
     $kasus = $_POST["laporan_kasus_narkotika_nomor"];

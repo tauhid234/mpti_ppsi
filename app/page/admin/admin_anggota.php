@@ -4,7 +4,9 @@ include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
-
+if($_SESSION["status_user"]!="admin"){
+    header("location:../intel/dashboard.php");
+}
 $unit = $_SESSION["unit"];
 ?>
 <!doctype html>
@@ -75,6 +77,7 @@ $unit = $_SESSION["unit"];
                                 <ul class="list-group list-group-flush">
                                 <li class="list-group-item">NRP : <?= $value['nrp'];?></li>
                                 <li class="list-group-item">Pangkat : <?= $value['pangkat'];?></li>
+                                <li class="list-group-item">Jabatan : <?= $value['jabatan'];?></li>
                                 <li class="list-group-item">Tanggal Lahir : <?= $value['tgl_lahir']; ?></li>
                                 <li class="list-group-item">Umur : <?= $value['umur'];?> Th</li>
                                 <li class="list-group-item">Berat Badan : <?= $value['berat_badan'];?> Kg</li>

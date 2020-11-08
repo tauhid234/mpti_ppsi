@@ -4,6 +4,9 @@ include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
+if($_SESSION["status_user"]!="admin"){
+    header("location:../intel/dashboard.php");
+}
 $unit = $_SESSION["unit"];
 ?>
 <!doctype html>
@@ -72,7 +75,7 @@ $unit = $_SESSION["unit"];
                     <div class="card mb-3">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                            <img src="../../../image/mysterius.png" class="card-img" style="height:auto;" alt="foto tersangka">
+                            <img src="../../../image/<?= $value['foto_tersangka'];?>" class="card-img" style="height:auto;" alt="foto tersangka">
                             </div>
                             <div class="col-md-8">
                             <div class="card-body">
