@@ -6,7 +6,7 @@ if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
 $unit = $_SESSION['unit'];
-$query = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND status_tersangka = 'belum tertangkap' ORDER BY id DESC LIMIT 1");
+$query = mysqli_query($conn,"SELECT * FROM surat_tugas WHERE polsek = '$unit' AND status_tersangka = 'tertangkap' ORDER BY id DESC LIMIT 1");
 $data = mysqli_fetch_array($query);
 $tanggal = date('d');
 $bulan = date('m');

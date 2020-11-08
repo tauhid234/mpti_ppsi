@@ -67,7 +67,7 @@ $unit = $_SESSION["unit"];
             <?php 
             $unit = $_SESSION["unit"];
             $query = mysqli_query($conn,"SELECT * FROM user WHERE status_user = 'admin' AND unit = '$unit'");
-            foreach ($query as $q => $value) {
+            while($value = mysqli_fetch_array($query)) {
             ?>
                 <div class="col-md-6">
                     <div class="card" style="width: 100%; background-color:#353b48;">
