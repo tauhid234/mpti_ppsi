@@ -96,6 +96,7 @@ if(isset($_POST["submit"])){
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
                     <a href="input_tersangka.php" class="btn btn-primary mb-4">Input Tersangka Baru</a>
+                    <a href="cetak/tersangka.php"><button type="button" class="btn btn-dark mb-4">Cetak</button></a>
                     <h5>Daftar Tersangka</h5>
                 </div>
             </div>

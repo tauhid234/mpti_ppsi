@@ -76,6 +76,8 @@ if(isset($_POST['lanjutkan'])){
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
                     <h5 class="mb-4">Laporan Awal</h5>
+                    <br>
+                    <a href="cetak/laporan_awal.php"><button type="button" class="btn btn-primary">Cetak</button></a>
                 </div>
             </div>
 

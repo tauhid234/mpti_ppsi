@@ -60,6 +60,7 @@ $alert = "";
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
                     <h5 class="mb-4">Laporan Akhir</h5>
+                    <a href="cetak/laporan_akhir.php"><button type="button" class="btn btn-primary">Cetak</button></a>
                 </div>
             </div>
 
