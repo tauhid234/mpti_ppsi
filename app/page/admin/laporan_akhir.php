@@ -4,7 +4,9 @@ include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
-
+if($_SESSION["status_user"]!="admin"){
+    header("location:../intel/dashboard.php");
+}
 $unit = $_SESSION["unit"];
 
 $alert = "";
@@ -63,7 +65,7 @@ $alert = "";
 
             <div class="row">
             <?php 
-            $query = mysqli_query($conn,"SELECT laporan_proses.*, laporan.latitude, laporan.longtitude, laporan.keterangan, laporan.foto_lokasi, surat_tugas.tanggal, surat_tugas.an_tersangka,surat_tugas.jenis_kelamin,surat_tugas.tgl_lahir,surat_tugas.agama,surat_tugas.pendidikan_terakhir,surat_tugas.pekerjaan,surat_tugas.warganegara,surat_tugas.alamat FROM laporan_proses,surat_tugas,laporan WHERE laporan_proses.unit = '$unit' AND laporan_proses.nomer_kasus = surat_tugas.nomer_kasus AND laporan_proses.nomer_kasus = laporan.nomer_kasus AND laporan_proses.status_laporan = 'sudah selesai' AND laporan.proses_laporan = 'selesai' AND surat_tugas.status_tersangka = 'sudah tertangkap' OR surat_tugas.status_tersangka = 'tertangkap'");
+            $query = mysqli_query($conn,"SELECT laporan_proses.*, laporan.latitude, laporan.longtitude, laporan.keterangan, laporan.foto_lokasi, surat_tugas.tanggal, surat_tugas.an_tersangka,surat_tugas.jenis_kelamin,surat_tugas.tgl_lahir,surat_tugas.agama,surat_tugas.pendidikan_terakhir,surat_tugas.pekerjaan,surat_tugas.warganegara,surat_tugas.alamat FROM laporan_proses,surat_tugas,laporan WHERE laporan_proses.unit = '$unit' AND laporan_proses.nomer_kasus = surat_tugas.nomer_kasus AND laporan_proses.nomer_kasus = laporan.nomer_kasus AND laporan_proses.status_laporan = 'sudah selesai' AND laporan.proses_laporan = 'selesai' AND surat_tugas.status_tersangka = 'tertangkap'");
             foreach ($query as $q => $value) {
             ?>
                 <div class="col-md-6">

@@ -4,6 +4,9 @@ include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
+if($_SESSION["status_user"]!="intel"){
+    header("location:../admin/dashboard.php");
+}
 
 $unit = $_SESSION["unit"];
 $team = $_SESSION["nama_team"];
@@ -147,7 +150,7 @@ if(isset($_POST["selesai"])){
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <img src="../../../image/<?= $value['foto_lokasi'];?>" style="width:100%;height:200px">
+                                        <img src="../../../image/<?= $value['foto_lokasi_proses'];?>" style="width:100%;height:200px">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

@@ -4,7 +4,9 @@ include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
-
+if($_SESSION["status_user"]!="admin"){
+    header("location:../intel/dashboard.php");
+}
 $unit = $_SESSION["unit"];
 $alert = "";
 if(isset($_POST["submit"])){
@@ -34,6 +36,7 @@ if(isset($_POST["submit"])){
                              VALUES ('$kdt','$kdl','$pasal','$tgl','$nama','$alias','$umur','$pekerjaan','$warganegara','$alamat','$foto','$unit','tertangkap','$bbt')");
         $update = mysqli_query($conn,"UPDATE surat_tugas SET status_tersangka = 'tertangkap' WHERE an_tersangka = '$nama'");
         $alert = "<script>swal('Sukses', 'Data berhasil disimpan', 'success');</script>";
+        header("Location:cetak/berita_acara.php");
     }
 
 

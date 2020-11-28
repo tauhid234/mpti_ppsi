@@ -33,7 +33,7 @@ $data = mysqli_fetch_array($user);
                             <p class="red">Notifikasi Tugas</p>
                                         <?php if($data_count > 0){?>
                                             <a class="dropdown-item media" href="#">
-                                            <span class="photo media-left"><img alt="avatar" src="../../../image/mysterius.png"></span>
+                                            <span class="photo media-left"><img alt="avatar" src="../../../image/<?= $data_trs['foto_tersangka'];?>"></span>
                                             <div class="message media-body">
                                             <span class="name float-left">Tugas Penyelidikan untuk <?= $data_trs['an_tersangka']; ?></span>
                                             </div>

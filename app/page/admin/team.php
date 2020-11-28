@@ -5,6 +5,9 @@ $infoSession = "<script>toastr.success('Success', 'tes')</script>";
 if(!isset($_SESSION["nrp"])){
     header("location:../../authentication/index.php");
 }
+if($_SESSION["status_user"]!="admin"){
+    header("location:../intel/dashboard.php");
+}
 $unit = $_SESSION["unit"];
 ?>
 <!doctype html>
@@ -14,8 +17,8 @@ $unit = $_SESSION["unit"];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SAT RESNARKOBA | TEAM</title>
 
-    <link rel="apple-touch-icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
-    <link rel="shortcut icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
+    <link rel="apple-touch-icon" href="../../../asset/logo.png">
+    <link rel="shortcut icon" href="../../../asset/logo.png">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
@@ -141,7 +144,7 @@ $unit = $_SESSION["unit"];
                                             <th>Alamat</th>
                                         </tr>
                                         <tr>
-                                        <?php $data3 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Eagle Eye Knights'");
+                                        <?php $data3 = mysqli_query($conn,"SELECT * FROM user WHERE unit = '$unit' AND nama_team = 'Eagle Eye Knights'");
                                     while($value3 = mysqli_fetch_array($data3)){ ?>
                                           <td><?= $value3['nrp']; ?></td>
                                             <td><?= strtoupper($value3['nama']); ?></td>
@@ -164,7 +167,7 @@ $unit = $_SESSION["unit"];
                                             <th>Alamat</th>
                                         </tr>
                                         <tr>
-                                        <?php $data4 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Valkyrie Light'");
+                                        <?php $data4 = mysqli_query($conn,"SELECT * FROM user WHERE unit = '$unit' AND nama_team = 'Valkyrie Light'");
                                     while($value4 = mysqli_fetch_array($data4)){ ?>
                                         <td><?= $value4['nrp']; ?></td>
                                             <td><?= strtoupper($value4['nama']); ?></td>
@@ -187,7 +190,7 @@ $unit = $_SESSION["unit"];
                                             <th>Alamat</th>
                                         </tr>
                                         <tr>
-                                        <?php $data5 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Wild Crime'");
+                                        <?php $data5 = mysqli_query($conn,"SELECT * FROM user WHERE unit = '$unit' AND nama_team = 'Wild Crime'");
                                     while($value5 = mysqli_fetch_array($data5)){ ?>
                                         <td><?= $value5['nrp']; ?></td>
                                             <td><?= strtoupper($value5['nama']); ?></td>
@@ -210,7 +213,7 @@ $unit = $_SESSION["unit"];
                                             <th>Alamat</th>
                                         </tr>
                                         <tr>
-                                        <?php $data6 = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Top Thunder Squad'");
+                                        <?php $data6 = mysqli_query($conn,"SELECT * FROM user WHERE unit = '$unit' AND nama_team = 'Top Thunder Squad'");
                                     while($value6 = mysqli_fetch_array($data6)){ ?>
                                         <td><?= $value6['nrp']; ?></td>
                                             <td><?= strtoupper($value6['nama']); ?></td>

@@ -17,6 +17,10 @@ if(isset($_POST["export"])){
     $kasus = "NK".$cekrow;
     $tgl = date("Y-m-d");
     $tersangka = $_POST["an_tersangka"];
+
+    $foto_tersangka = $_FILES['file']['name'];
+    $file_tmp = $_FILES['file']['tmp_name'];
+
     $kel = $_POST["jenis"];
     $agama = $_POST["agama"];
     $tgl_lahir = $_POST["tgl_lahir"];
@@ -27,7 +31,7 @@ if(isset($_POST["export"])){
 
     $tim = $_POST["team"];
 
-    if($tgl==""||$tersangka==""||$kel==""||$agama==""||$tgl_lahir==""||$pend==""||$kerja==""||$warga==""||$alamat==""){
+    if($tgl==""||$tersangka==""||$kel==""||$agama==""||$tgl_lahir==""||$pend==""||$kerja==""||$warga==""||$alamat==""||$foto_tersangka==""){
         $alert = "<script>swal('Peringatan','Field masih ada yang belum di isi','warning')</script>";
     }else{
         $queryCek = mysqli_query($conn,"SELECT nama_team FROM team WHERE nama_team = '$tim' AND unit = '$unit'");
@@ -38,8 +42,9 @@ if(isset($_POST["export"])){
             $alert = "<script>swal('Informasi','Anggota belum ada pada tim tersebut','info')</script>";
         }
         else{
-        mysqli_query($conn,"INSERT INTO surat_tugas (id,nomer_kasus,nama_team,tanggal,polsek,an_tersangka,jenis_kelamin,tgl_lahir,agama,pendidikan_terakhir,pekerjaan,warganegara,alamat,status_tersangka) VALUES 
-                        ('','$kasus','$tim','$tgl','$unit','$tersangka','$kel','$tgl_lahir','$agama','$pend','$kerja','$warga','$alamat','belum tertangkap')");
+        move_uploaded_file($file_tmp,'../../../image/'.$foto_tersangka);
+        mysqli_query($conn,"INSERT INTO surat_tugas (id,nomer_kasus,nama_team,tanggal,polsek,an_tersangka,foto_tersangka,jenis_kelamin,tgl_lahir,agama,pendidikan_terakhir,pekerjaan,warganegara,alamat,status_tersangka) VALUES 
+                        ('','$kasus','$tim','$tgl','$unit','$tersangka','$foto_tersangka','$kel','$tgl_lahir','$agama','$pend','$kerja','$warga','$alamat','belum tertangkap')");
 
         mysqli_query($conn,"UPDATE team SET status_team = 'sedang_penyelidikan' WHERE unit = '$unit' AND nama_team = '$tim'");
         $alert = "<script>swal('Sukses','Data Penugasan berhasil dibuat','success')</script>";
@@ -104,9 +109,16 @@ if(isset($_POST["export"])){
 
         <div class="row">
           <div class="col-md-12" style="padding-top:10px;">
-            <form method="post" action="">
+            <form method="post" action="" enctype="multipart/form-data">
                 <div class="form-row">
-                    <div class="form-group col-md-12">
+                    <div id="imagePreview" style="width:100px; height:250px;"></div>
+                </div>
+                <div class="form-row">
+                <div class="form-group col-md-6">
+                        <label for="file">Foto Tersangka</label>
+                            <input type="file" class="form-control" id="file" name="file" onchange="return fileValidation()"/>
+                </div>
+                    <div class="form-group col-md-6">
                     <label for="team">Ditugaskan kepada team</label>
                             <select name="team" class="form-control">
                                 <option value="">-</option>
@@ -203,6 +215,27 @@ if(isset($_POST["export"])){
         <!-- /.site-footer -->
     </div>
     <!-- /#right-panel -->
+    <script>
+
+        function fileValidation(){
+            var fileInput = document.getElementById('file');
+            var filePath = fileInput.value;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+            if(!allowedExtensions.exec(filePath)){
+                swal("Peringatan","Extensi file yang di perbolehkan format jpg / jpeg / png","warning");
+                fileInput.value = '';
+                return false;
+            }else{
+                //Image preview
+                if (fileInput.files && fileInput.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('imagePreview').innerHTML = '<img src="'+e.target.result+'"/>';
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+            }
+        }
 
     </script>
 

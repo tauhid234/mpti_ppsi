@@ -4,6 +4,9 @@ include("../../../server/config.php");
 if(!isset($_SESSION["nrp"])){
     header("Location:../../authentication/index.php");
 }
+if($_SESSION["status_user"]!="intel"){
+    header("location:../admin/dashboard.php");
+}
 
 $alert = "";
 $sesi = $_SESSION["status_user"];
