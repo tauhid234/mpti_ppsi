@@ -25,6 +25,7 @@ $data = mysqli_fetch_array($query);
   </head>
   <body onload="window.print()">
   
+  <img src="../../../../asset/logo_kepolisian.jpg" class="rounded mx-auto d-block" width="100" height="100">
   <h5 class="text-center"><u></b>SURAT PERINTAH PENANGKAPAN</b></u></h5>
   <p class="card-title text-center">Nomor :  SP. Kap / 112 -BRTS / I / 2020 / BNNP</p>
 

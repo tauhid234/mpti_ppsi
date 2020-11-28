@@ -23,6 +23,7 @@ $data = mysqli_fetch_array($query);
   </head>
   <body onload="window.print()">
   
+  <img src="../../../../asset/logo_kepolisian.jpg" class="rounded mx-auto d-block" width="100" height="100">
   <h5 class="text-center"><u></b>SURAT PERINTAH TUGAS</b></u></h5>
   <p class="card-title text-center">Nomor : SP. Gas / 11 - BRTS / I / 2020 / BNNP</p>
 

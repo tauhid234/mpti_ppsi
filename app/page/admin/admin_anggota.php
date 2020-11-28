@@ -58,6 +58,8 @@ $unit = $_SESSION["unit"];
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
                     <h5>Admin Anggota</h5>
+                    <br>
+                    <a href="cetak/admin_anggota.php"><button type="button" class="btn btn-primary">Cetak</button></a>
                 </div>
             </div>
         

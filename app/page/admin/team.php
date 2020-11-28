@@ -13,8 +13,6 @@ $unit = $_SESSION["unit"];
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SAT RESNARKOBA | TEAM</title>
-    <meta name="description" content="Ela Admin - HTML5 Admin Template">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
     <link rel="shortcut icon" href="https://zenodo.org/api/files/00000000-0000-0000-0000-000000000000/socialsciencepolicing/logo.jpg">
@@ -97,7 +95,7 @@ $unit = $_SESSION["unit"];
                                             <th>Alamat</th>
                                         </tr>
                                         <tr>
-                                    <?php $data = mysqli_query($conn,"SELECT nama_anggota FROM team WHERE unit = '$unit' AND nama_team = 'Eradicate Drugs'");
+                                    <?php $data = mysqli_query($conn,"SELECT * FROM user WHERE unit = '$unit' AND nama_team = 'Eradicate Drugs'");
                                     while($value = mysqli_fetch_array($data)){ ?>
                                            <td><?= $value['nrp']; ?></td>
                                             <td><?= strtoupper($value['nama']); ?></td>
