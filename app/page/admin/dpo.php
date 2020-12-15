@@ -64,7 +64,8 @@ $unit = $_SESSION["unit"];
             <div class="animated fadeIn">
             <div class="row" style="padding-bottom:10px;">
                 <div class="col-md-6">
-                    <h5>Data Pencarian Orang (DPO)</h5>
+                    <h5 class="mb-4">Data Pencarian Orang (DPO)</h5>
+                    <a href="cetak/dpo.php"><button type="button" class="btn btn-primary mb-4">Cetak</button></a>
                 </div>
             </div>
 
