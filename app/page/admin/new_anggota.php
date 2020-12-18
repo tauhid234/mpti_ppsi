@@ -21,7 +21,7 @@ if(isset($_POST["submit"])){
     $unit = $_POST["unit"];
     $tim = $_POST["team"];
     $pangkat = $_POST["pangkat"];
-    $jabatan = $_POST["jabatan"];
+    $jabatan = strtoupper($_POST["jabatan"]);
     $pass = $_POST["password"];
     $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -145,12 +145,28 @@ if(isset($_POST["submit"])){
                                 <label for="tinggi">Pangkat</label>
                                 <select class="form-control" name="pangkat" id="pangkat">
                                     <option value="">-</option>
-                                    <option value="BRIPDA">BRIPDA</option>
-                                    <option value="BRIPKA">BRIPKA</option>
+                                    <option value="JENDERAL POLISI">JENDERAL POLISI</option>
+                                    <option value="KOMJENPOL">KOMJENPOL</option>
+                                    <option value="IRJENPOL">IRJENPOL</option>
+                                    <option value="BRIGJENPOL">BRIGJENPOL</option>
+                                    <option value="KOMBES">KOMBES</option>
+                                    <option value="AKBP">AKBP</option>
+                                    <option value="KOMPOL">KOMPOL</option>
+                                    <option value="AKP">AKP</option>
+                                    <option value="IPTU">IPTU</option>
+                                    <option value="IPDA">IPDA</option>
                                     <option value="AIPTU">AIPTU</option>
                                     <option value="AIPDA">AIPDA</option>
-                                    <option value="AKBP">BRIGPOL</option>
+                                    <option value="BRIPKA">BRIPKA</option>
+                                    <option value="BRIGPOL">BRIGPOL</option>
                                     <option value="BRIPTU">BRIPTU</option>
+                                    <option value="BRIPDA">BRIPDA</option>
+                                    <option value="ABRIP">ABRIP</option>
+                                    <option value="ABRIPTU">ABRIPTU</option>
+                                    <option value="ABRIPDA">ABRIPDA</option>
+                                    <option value="BHARAKA">BHARAKA</option>
+                                    <option value="BHARATU">BHARATU</option>
+                                    <option value="BHARADA">BHARADA</option>
                                 </select>
                             </div>
                         </div>
@@ -234,15 +250,7 @@ if(isset($_POST["submit"])){
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="jabatan">Jabatan</label>
-                                <select class="form-control" name="jabatan" id="jabatan">
-                                    <option value="">-</option>
-                                    <option value="KOMBES">KOMBES</option>
-                                    <option value="AKBP">AKBP</option>
-                                    <option value="KOMPOL">KOMPOL</option>
-                                    <option value="AKP">AKP</option>
-                                    <option value="IPTU">IPTU</option>
-                                    <option value="IPDA">IPDA</option>
-                                </select>
+                                <input type="text" class="form-control" id="jabatan" name="jabatan">
                             </div>
                         </div>
                         <div class="form-row">

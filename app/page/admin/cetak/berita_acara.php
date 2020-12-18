@@ -29,6 +29,7 @@ $waktu = date("H:i:s");
   </head>
   <body onload="window.print()">
   
+  <img src="../../../../asset/logo_kepolisian.jpg" class="rounded mx-auto d-block" height="100">
   <h5 class="text-center"><u></b>BERITA ACARA PENANGKAPAN</b></u></h5>
 
   <p class="m-4">Pada Hari ini tanggal <?= $tanggal; ?> Bulan <?= $bulan; ?> Tahun <?= $tahun; ?> waktu <?= $waktu; ?></p>
